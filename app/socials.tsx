@@ -4,9 +4,14 @@ const socials: Record<string, { link: string; icon: string }> = {
 		icon: "../github.svg",
 	},
 
-	Instagram: {
+	Roblox: {
 		link: "https://www.roblox.com/users/2536605621/profile",
 		icon: "../roblox.svg",
+	},
+
+	Twitter: {
+		link: "https://x.com/ItzMrRatsP",
+		icon: "../twitter.svg",
 	},
 };
 
