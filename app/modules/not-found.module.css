@@ -1,0 +1,16 @@
+.text {
+	font-size: 40px;
+	font-weight: bold;
+	max-width: fit-content;
+	color: var(--foreground-color);
+	margin: 0 auto;
+}
+
+.description {
+	/* description text */
+	font-size: 15px;
+	max-width: fit-content;
+	color: var(--foreground-color);
+	padding: -15px;
+	margin: 0 auto;
+}
