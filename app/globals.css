@@ -19,8 +19,8 @@ body {
 	height: 100%;
 	width: 100%;
 	overflow-x: hidden;
+	font-family: "Roboto", sans-serif; /* add sans-serif to make sure the font family is working */
 }
-
 .top-background {
 	width: 100%;
 	height: 100%;
@@ -34,7 +34,6 @@ body {
 	margin-bottom: 20px;
 	z-index: -1;
 }
-
 .avatar {
 	border-radius: 50%;
 	width: 400px;
@@ -48,7 +47,6 @@ body {
 	top: 50%;
 	transform: translate(50%, -50%);
 }
-
 .main {
 	display: flex;
 	flex-direction: column;
@@ -65,7 +63,6 @@ body {
 	/* padding: 15px; */
 	gap: 5px;
 }
-
 .list {
 	display: flex;
 	flex-direction: row;
@@ -74,7 +71,6 @@ body {
 	transform: translateY(-25px);
 	list-style: none;
 }
-
 .header {
 	font-size: 45px;
 	font-weight: bold;
@@ -83,7 +79,6 @@ body {
 	margin: 0 auto;
 	font-family: "Roboto", sans-serif; /* add sans-serif to make sure the font family is working */
 }
-
 .title {
 	font-size: 25px;
 	font-weight: bold;
@@ -98,11 +93,9 @@ body {
 	max-width: 40px;
 	transition: transform 0.1s ease-in-out;
 }
-
 .social:hover {
 	transform: scale(1.1);
 }
-
 .image {
 	display: block;
 	border-radius: 100%;
@@ -110,7 +103,6 @@ body {
 	margin-bottom: 20px;
 	transform: translateY(25px);
 }
-
 .description {
 	/* font-weight: bold; */
 	font-size: 15px;
@@ -119,7 +111,6 @@ body {
 	display: flex;
 	justify-content: center;
 }
-
 h1 {
 	color: var(--foreground-color);
 	display: flex;
