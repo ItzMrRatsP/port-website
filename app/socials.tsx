@@ -1,8 +1,8 @@
 const socials: Record<string, { link: string; icon: string }> = {
-	Github: {
-		link: "https://github.com/ItzMrRatsP",
-		icon: "../github.svg",
-	},
+	// Github: {
+	// 	link: "https://github.com/ItzMrRatsP",
+	// 	icon: "../github.svg",
+	// },
 
 	Roblox: {
 		link: "https://www.roblox.com/users/2536605621/profile",
