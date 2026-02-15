@@ -8,7 +8,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 			<img
 				className="image"
 				alt="Avatar"
-				src="https://avatars.githubusercontent.com/u/163430353?v=4"></img>
+				src="./avatar.png"
+			/>
 			<h1 className="header">About me</h1>
 			<p className="description">
 				Hi, I'm ItzMrRatsP, a Roblox developer with 5 years of experience, and I'm proud to say that my projects
