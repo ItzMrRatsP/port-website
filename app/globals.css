@@ -73,7 +73,9 @@ body {
 	gap: 5px;
 	padding: 15px;
 	transform: translateY(-25px);
+	margin-bottom: -40px;
 	list-style: none;
+	flex-wrap: wrap;
 }
 
 .header {
@@ -105,6 +107,20 @@ body {
 	transform: scale(1.15);
 }
 
+.icon {
+	padding-left: 5px;
+	padding-right: 5px;
+	border-radius: 15%;
+	margin-top: 15px;
+	transform-style: preserve-3d;
+	transition: transform 0.3s;
+}
+
+.icon:hover {
+	transform: rotate(1deg) scale(1.15);
+	animation: rotate 0.2s ease-in-out;
+}
+
 .image {
 	border-radius: 50%;
 	max-height: 120px;
@@ -117,6 +133,16 @@ body {
 	/* font-weight: bold; */
 	font-size: 15px;
 	max-width: 75ch;
+	color: var(--foreground-color);
+	display: flex;
+	justify-content: center;
+}
+
+.gameDescription {
+	font-weight: bold;
+	margin-bottom: -10px;
+	font-size: 15px;
+	max-width: 50ch;
 	color: var(--foreground-color);
 	display: flex;
 	justify-content: center;

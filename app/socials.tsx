@@ -15,12 +15,41 @@ const socials: Record<string, { link: string; icon: string }> = {
 	},
 };
 
+import projects from "./modules/projects.json";
+
+export function GetContributions() {
+	// The contributed projects are stored in a JSON file.
+	return (
+		<li className="list">
+			<ul className="list">
+				{Object.entries(projects).map(([k, v]) => (
+					<li key={k}>
+						<a
+							href={v.url}
+							className="description"
+							target="_blank"
+							rel="noopener noreferrer">
+							<img
+								className="icon"
+								src={v.icon}
+								alt={k}
+							/>
+						</a>
+						<p className="gameDescription">{k}</p>
+						<p className="description">Visits: {v.visits}</p>
+					</li>
+				))}
+			</ul>
+		</li>
+	);
+}
+
 /**
  * Returns a list of social media links.
  *
  * @returns {JSX.Element} A list of social media links.
  */
-export default function GetSocials() {
+export function GetSocials() {
 	return (
 		<li className="list">
 			<ul className="list">

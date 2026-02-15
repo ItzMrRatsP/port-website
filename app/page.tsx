@@ -1,5 +1,6 @@
 import "./globals.css";
-import GetSocials from "./socials";
+
+import { GetContributions, GetSocials } from "./socials";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
@@ -16,9 +17,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 				have been visited over 100 million times. I've also had the opportunity to be trained by a professional
 				scripter called DylWithIt, which has helped me to improve my skills and create high-quality content.
 			</p>
+			<p className="header">Contributions</p>
+			<GetContributions></GetContributions>
 			<h1 className="header">Socials</h1>
 			<GetSocials></GetSocials>
-			<p className="title">Under construction!</p>
 		</div>
 	);
 }
