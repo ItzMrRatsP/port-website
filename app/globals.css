@@ -1,7 +1,16 @@
 @media (prefers-color-scheme: dark) {
 	:root {
-		--background-color: #131313; /* Dark Gray */
+		--background-color: rgb(17, 17, 17); /* Dark Gray */
 		--foreground-color: #ffffff; /* Light Gray */
+		--invert: 0;
+	}
+}
+
+@media (prefers-color-scheme: light) {
+	:root {
+		--background-color: #d1d1d1; /* Dark Gray */
+		--foreground-color: #1d1d1d; /* Light Gray */
+		--invert: 1;
 	}
 }
 
@@ -16,9 +25,8 @@ body {
 	display: flex;
 	flex-direction: column;
 	font-family: "Poppins", Arial, Helvetica, sans-serif;
-	height: 100vh;
-	width: 100vw;
-	overflow-y: scroll;
+	height: 100%;
+	width: 100%;
 	font-family: "Roboto", sans-serif; /* add sans-serif to make sure the font family is working */
 }
 
@@ -97,6 +105,8 @@ body {
 }
 
 .social {
+	color: var(--foreground-color);
+	filter: invert(var(--invert));
 	display: block;
 	padding: 5px;
 	max-width: 40px;
