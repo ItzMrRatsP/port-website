@@ -16,9 +16,9 @@ body {
 	display: flex;
 	justify-content: center;
 	font-family: "Poppins", Arial, Helvetica, sans-serif;
-	height: 100%;
-	width: 100%;
-	overflow-x: hidden;
+	height: 100vh;
+	width: 100vw;
+	overflow-y: auto;
 	font-family: "Roboto", sans-serif; /* add sans-serif to make sure the font family is working */
 }
 
