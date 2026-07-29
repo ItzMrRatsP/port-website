@@ -609,23 +609,23 @@ nav a {
 	}
 }
 
-@media (max-width: 700px) {
-	.image-frame {
-		position: relative;
-
-		left: auto;
-		top: auto;
-
-		transform: translateY(-20px);
-
-		width: 140px;
-		height: 240px;
-
-		margin-bottom: -10px;
-	}
-
+@media (max-width: 1200px) {
 	.hero-top {
 		flex-direction: column;
+		align-items: center;
+	}
+	.terminal-frame {
+		transform: translateY(0.5vh);
+	}
+	.image-frame {
+		position: relative;
+		left: auto;
+		right: auto;
+		top: auto;
+		transform: none;
+		width: 140px;
+		height: 240px;
+		margin-bottom: 12px;
 	}
 }
 
@@ -644,14 +644,6 @@ nav a {
 	.hero-buttons {
 		gap: 8px;
 		margin-top: 16px;
-	}
-
-	.terminal-frame {
-		transform: translateY(-1vh);
-	}
-
-	.image-frame {
-		transform: translateY(20px);
 	}
 
 	.video-controls {
