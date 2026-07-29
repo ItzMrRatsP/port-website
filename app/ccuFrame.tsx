@@ -10,7 +10,19 @@ type GameCCU = {
 
 const PLACE_IDS = ["132813250731469", "123061227632512", "14228650765", "16127140865", "125700405216363"];
 
-const PROXY = "https://api.allorigins.win/raw?url=";
+// Multiple proxies in priority order — if one is down/rate-limited, the next is tried
+const PROXIES: { build: (url: string) => string; unwrap?: (json: any) => any }[] = [
+	{
+		build: (url) => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+	},
+	{
+		build: (url) => `https://corsproxy.io/?url=${encodeURIComponent(url)}`,
+	},
+	{
+		build: (url) => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,
+	},
+];
+
 const CACHE_KEY = "universeIdCache";
 
 function loadCache(): Map<string, number> {
@@ -41,12 +53,27 @@ export default function CCUFrame() {
 	const universeCache = useRef<Map<string, number>>(loadCache());
 
 	async function fetchThroughProxy(targetUrl: string, signal?: AbortSignal) {
-		const res = await fetch(PROXY + encodeURIComponent(targetUrl), { signal });
-		if (!res.ok) {
-			throw new Error(`Proxy request failed: ${res.status}`);
+		let lastError: unknown;
+
+		for (const proxy of PROXIES) {
+			try {
+				const res = await fetch(proxy.build(targetUrl), { signal });
+				if (!res.ok) {
+					throw new Error(`Proxy request failed: ${res.status}`);
+				}
+				const json = await res.json();
+				return proxy.unwrap ? proxy.unwrap(json) : json;
+			} catch (err) {
+				// If the request was aborted (cleanup/unmount), stop trying immediately
+				if (err instanceof DOMException && err.name === "AbortError") {
+					throw err;
+				}
+				lastError = err;
+				// otherwise fall through and try the next proxy in the list
+			}
 		}
-		// /raw returns the target response body directly, no unwrapping needed
-		return res.json();
+
+		throw lastError instanceof Error ? lastError : new Error("All proxies failed");
 	}
 
 	async function getUniverseId(placeId: string, signal?: AbortSignal): Promise<number> {
