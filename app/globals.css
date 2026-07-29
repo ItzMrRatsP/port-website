@@ -39,6 +39,32 @@ body {
 	overflow: hidden;
 }
 
+.hero-description {
+	max-width: 480px;
+	margin-top: 4px;
+
+	color: #9ca3af;
+	font-family: monospace;
+	font-size: clamp(12px, 1vw, 14px);
+	line-height: 1.6;
+	text-align: center;
+}
+
+.hero-description-link {
+	color: #5bda79;
+	text-decoration: underline;
+	text-underline-offset: 2px;
+	transition: color 0.2s ease;
+}
+
+.hero-description-link:hover {
+	color: #84ff8a;
+}
+
+.hero-description-link:visited {
+	color: #5bda79;
+}
+
 .hero-buttons {
 	display: flex;
 	z-index: 5;

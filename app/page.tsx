@@ -147,6 +147,18 @@ export default function Home() {
 							Roblox
 						</a>
 					</div>
+
+					<p className="hero-description">
+						Full-stack Roblox developer building games, systems, and everything in between. Mentored by{" "}
+						<a
+							href="https://dylwithlt.github.io/"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="hero-description-link">
+							DylWithIt
+						</a>
+						.
+					</p>
 				</div>
 			</section>
 
