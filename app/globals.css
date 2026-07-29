@@ -55,7 +55,7 @@ body {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	gap: 8px;
+	gap: 0.5rem;
 
 	padding: clamp(10px, 1vw, 12px) clamp(14px, 2vw, 20px);
 

@@ -125,7 +125,6 @@ export default function Home() {
 						<button
 							className="terminal-button"
 							onClick={copyDiscord}>
-							<span className="prompt">&gt;</span>
 							<FaDiscord size={16} />
 							{copied ? "Copied!" : "Discord"}
 						</button>
