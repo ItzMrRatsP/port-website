@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import VideoPlayer from "./video-player";
 
 import { FaGithub, FaDiscord } from "react-icons/fa";
+import CCUFrame from "./ccuFrame";
 
 function RobloxIcon() {
 	return (
@@ -120,6 +121,8 @@ export default function Home() {
 						<code className="terminal-tag terminal-tag--small">5 years of experience</code>
 						<code className="terminal-tag terminal-tag--small">I love her 💖</code>
 					</div>
+
+					<CCUFrame></CCUFrame>
 
 					<div className="hero-buttons">
 						<button
