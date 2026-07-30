@@ -27,4 +27,10 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add public/data/roblox-stats.json
           git diff --staged --quiet || git commit -m "chore: update roblox stats"
+
+          # Pull/rebase before pushing in case master moved since checkout
+          # (e.g. a manual push or a workflow_dispatch run overlapping this one).
+          # This is the only workflow that pushes stats now, but this keeps
+          # retries safe instead of failing outright on a race.
+          git pull --rebase origin master
           git push

@@ -1,27 +1,25 @@
-# Deploys the Next.js site to GitHub Pages, and (on the schedule trigger)
-# refreshes public/data/roblox-stats.json right before building — so the
-# live stats/game-jam cards stay current without a separate workflow
-# trying to trigger this one via a commit.
+# Deploys the Next.js site to GitHub Pages.
+#
+# Stats refresh now lives solely in update-stats.yml, which runs on its own
+# 5-minute schedule and commits public/data/roblox-stats.json to master.
+# That commit lands here via the `push` trigger below and kicks off a fresh
+# deploy automatically — so we don't need a second schedule trigger (or a
+# second fetch/commit step) fighting over the same cron slot.
 
 name: Deploy Next.js site to Pages
 
 on:
-  # Runs on pushes targeting the default branch
+  # Runs on pushes targeting the default branch (including the stats-update
+  # commits made by update-stats.yml)
   push:
     branches: ["master"]
-
-  # Refreshes Roblox stats + redeploys automatically on a schedule
-  schedule:
-    - cron: "*/5 * * * *" # every 5 minutes — the shortest interval GitHub reliably honors
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
-# (contents: write added so the scheduled run can also commit the refreshed
-# stats file back to the repo for persistence/history)
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
@@ -74,17 +72,6 @@ jobs:
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
-
-      - name: Fetch latest Roblox stats
-        run: node scripts/fetch-roblox-stats.mjs
-
-      - name: Commit refreshed stats (best-effort, doesn't block deploy)
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add public/data/roblox-stats.json
-          git diff --staged --quiet || git commit -m "chore: refresh roblox stats"
-          git push || echo "Push skipped (nothing to push or a race with another run) — continuing anyway, the build below still uses the freshly fetched file."
 
       - name: Build with Next.js
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
