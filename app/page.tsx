@@ -93,7 +93,7 @@ function saveCache(cache: Map<string, number>) {
 }
 
 // Small helper component to fetch specific game stats for the Jam cards
-function GameJamStats({ placeId, universeId }: { placeId: string; universeId?: number }) {
+function GameJamStats({ placeId, universeId }: { placeId: string; universeId: number }) {
 	const [stats, setStats] = useState<{ playing: number; visits: number } | null>(null);
 	const [loading, setLoading] = useState(true);
 	const universeCache = useRef<Map<string, number>>(loadCache());
