@@ -1,18 +1,21 @@
 # Deploys the Next.js site to GitHub Pages.
 #
-# Stats refresh now lives solely in update-stats.yml, which runs on its own
-# 5-minute schedule and commits public/data/roblox-stats.json to master.
-# That commit lands here via the `push` trigger below and kicks off a fresh
-# deploy automatically — so we don't need a second schedule trigger (or a
-# second fetch/commit step) fighting over the same cron slot.
+# Stats now live entirely outside this pipeline: update-stats.yml commits
+# public/data/roblox-stats.json on its own 5-minute schedule, and the
+# front end reads that file straight from raw.githubusercontent.com at
+# runtime (see use-roblox-stats.ts) instead of from the deployed copy.
+# So stats-only commits are excluded below (paths-ignore) — they no longer
+# need to trigger a full Next.js rebuild + redeploy.
 
 name: Deploy Next.js site to Pages
 
 on:
-  # Runs on pushes targeting the default branch (including the stats-update
-  # commits made by update-stats.yml)
+  # Runs on pushes targeting the default branch, except commits that only
+  # touch the stats file — those are picked up live by the browser instead.
   push:
     branches: ["master"]
+    paths-ignore:
+      - "public/data/roblox-stats.json"
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
