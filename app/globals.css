@@ -451,6 +451,10 @@ nav a:hover {
 	border: 1px solid rgba(255, 255, 255, 0.05);
 	border-radius: 12px;
 	overflow-y: auto;
+	/* This panel is itself a flex item of .hero-split — without this it
+	   can be forced wider than its share of the row/column by content
+	   inside it (e.g. long game names), causing horizontal overflow. */
+	min-width: 0;
 }
 
 .hero-split-panel::-webkit-scrollbar {
@@ -548,6 +552,9 @@ nav a:hover {
 	align-items: center;
 	gap: 16px;
 	padding: 16px;
+	/* Same fix as .ccu-card: without this, the nowrap game name below
+	   can force this flex row wider than its parent on narrow screens. */
+	min-width: 0;
 }
 
 .ccu-top-card .gamejam-icon {
@@ -562,6 +569,7 @@ nav a:hover {
 	align-items: flex-start;
 	gap: 4px;
 	min-width: 0;
+	width: 100%;
 }
 
 .ccu-top-badge {
@@ -658,6 +666,9 @@ nav a:hover {
 		border-color 0.2s ease;
 	/* Keeps text from getting cut off by the edges */
 	word-break: break-all;
+	/* Grid items default to min-width: auto, which lets nowrap text
+	   inside force the column wider than the viewport on mobile. */
+	min-width: 0;
 }
 
 .ccu-card:hover {
@@ -768,6 +779,7 @@ nav a:hover {
 		transform 0.2s ease,
 		box-shadow 0.2s ease,
 		border-color 0.2s ease;
+	min-width: 0;
 }
 
 .gamejam-card:hover {
@@ -1248,5 +1260,8 @@ nav a:hover {
 		right: 8px;
 		bottom: 8px;
 		padding: 8px;
+	}
+	.ccu-list {
+		grid-template-columns: 1fr;
 	}
 }
