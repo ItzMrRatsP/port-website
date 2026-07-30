@@ -1,43 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-
-// Same proxy list/order as CCUFrame — kept independent here so this
-// component has no dependency on the CCU component.
-const PROXIES: ((url: string) => string)[] = [
-	(url) => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
-	(url) => `https://corsproxy.io/?url=${encodeURIComponent(url)}`,
-	(url) => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,
-	(url) => `https://thingproxy.freeboard.io/fetch/${url}`,
-];
-
-const PROXY_TIMEOUT_MS = 6000;
-const LAST_GOOD_PROXY_KEY = "lastGoodProxyIndex"; // shared with CCUFrame/game-thumbnail
-
-function getPreferredOrder(): number[] {
-	let preferred = 0;
-	try {
-		const stored = localStorage.getItem(LAST_GOOD_PROXY_KEY);
-		if (stored) preferred = Number(stored) || 0;
-	} catch {}
-	const order = PROXIES.map((_, i) => i);
-	if (preferred > 0 && preferred < order.length) {
-		order.splice(order.indexOf(preferred), 1);
-		order.unshift(preferred);
-	}
-	return order;
-}
-
-function rememberGoodProxy(index: number) {
-	try {
-		localStorage.setItem(LAST_GOOD_PROXY_KEY, String(index));
-	} catch {}
-}
-
-function withTimeout(ms: number) {
-	const controller = new AbortController();
-	const timeoutId = setTimeout(() => controller.abort(), ms);
-	return { signal: controller.signal, cancel: () => clearTimeout(timeoutId) };
-}
+import { fetchThroughProxy } from "./cors-proxies";
 
 const UNIVERSE_CACHE_KEY = "universeIdCache"; // shared format with CCUFrame's cache
 const ICON_CACHE_KEY = "gameIconCache";
@@ -76,25 +39,6 @@ function saveIconCache(cache: Record<string, string>) {
 	} catch {
 		// ignore
 	}
-}
-
-async function fetchThroughProxy(targetUrl: string) {
-	let lastError: unknown;
-	for (const index of getPreferredOrder()) {
-		const { signal, cancel } = withTimeout(PROXY_TIMEOUT_MS);
-		try {
-			const res = await fetch(PROXIES[index](targetUrl), { signal });
-			if (!res.ok) throw new Error(`Proxy failed: ${res.status}`);
-			const json = await res.json();
-			rememberGoodProxy(index);
-			return json;
-		} catch (err) {
-			lastError = err;
-		} finally {
-			cancel();
-		}
-	}
-	throw lastError instanceof Error ? lastError : new Error("All proxies failed");
 }
 
 async function getUniverseId(placeId: string): Promise<number> {
