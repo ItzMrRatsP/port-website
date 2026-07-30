@@ -109,7 +109,7 @@ export default function Home() {
 							<a
 								href="#home"
 								onClick={scrollToSection("home")}>
-								HOME
+								<span className="nav-prompt">~/</span> HOME
 							</a>
 						</li>
 						<li>
@@ -121,7 +121,7 @@ export default function Home() {
 										.getElementById("stats-jams")
 										?.scrollIntoView({ behavior: "smooth", block: "start" });
 								}}>
-								STATS & JAMS
+								<span className="nav-prompt">~/</span> STATS & JAMS
 							</a>
 						</li>
 					</ul>
