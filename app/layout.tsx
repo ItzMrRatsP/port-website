@@ -26,7 +26,10 @@ export default function RootLayout({
 		<html
 			lang="en"
 			className={`${inter.variable} ${jetbrainsMono.variable}`}>
-			<body>{children}</body>
+			<body>
+				{/* Floating Decorations */}
+				{children}
+			</body>
 		</html>
 	);
 }

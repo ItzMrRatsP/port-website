@@ -2,9 +2,155 @@
 import { useState, useEffect, useRef } from "react";
 import VideoPlayer from "./video-player";
 
-import { FaGithub, FaDiscord } from "react-icons/fa";
+import {
+	FaGithub,
+	FaDiscord,
+	FaCode,
+	FaLightbulb,
+	FaHammer,
+	FaCube,
+	FaCog,
+	FaUsers,
+	FaCalendarAlt,
+} from "react-icons/fa";
 import CCUFrame from "./ccuFrame";
+import GameJamIcon from "./gamejam-icon";
 
+// Same proxy list/order as CCUFrame — kept independent here so this
+// component has no import-time dependency on it.
+const PROXIES: ((url: string) => string)[] = [
+	(url) => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+	(url) => `https://corsproxy.io/?url=${encodeURIComponent(url)}`,
+	(url) => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,
+	(url) => `https://thingproxy.freeboard.io/fetch/${url}`,
+];
+
+const PROXY_TIMEOUT_MS = 6000;
+const LAST_GOOD_PROXY_KEY = "lastGoodProxyIndex"; // shared with ccuFrame/gamejam-icon/game-thumbnail
+
+function getPreferredOrder(): number[] {
+	let preferred = 0;
+	try {
+		const stored = localStorage.getItem(LAST_GOOD_PROXY_KEY);
+		if (stored) preferred = Number(stored) || 0;
+	} catch {}
+	const order = PROXIES.map((_, i) => i);
+	if (preferred > 0 && preferred < order.length) {
+		order.splice(order.indexOf(preferred), 1);
+		order.unshift(preferred);
+	}
+	return order;
+}
+
+function rememberGoodProxy(index: number) {
+	try {
+		localStorage.setItem(LAST_GOOD_PROXY_KEY, String(index));
+	} catch {}
+}
+
+function withTimeout(ms: number) {
+	const controller = new AbortController();
+	const timeoutId = setTimeout(() => controller.abort(), ms);
+	return { signal: controller.signal, cancel: () => clearTimeout(timeoutId) };
+}
+
+async function fetchThroughProxy(targetUrl: string) {
+	let lastError: unknown;
+	for (const index of getPreferredOrder()) {
+		const { signal, cancel } = withTimeout(PROXY_TIMEOUT_MS);
+		try {
+			const res = await fetch(PROXIES[index](targetUrl), { signal });
+			if (!res.ok) throw new Error(`Proxy failed: ${res.status}`);
+			const json = await res.json();
+			rememberGoodProxy(index);
+			return json;
+		} catch (err) {
+			lastError = err;
+		} finally {
+			cancel();
+		}
+	}
+	throw lastError instanceof Error ? lastError : new Error("All proxies failed");
+}
+
+// Shared cache key matching your ccuFrame
+const CACHE_KEY = "universeIdCache";
+
+function loadCache(): Map<string, number> {
+	try {
+		const stored = localStorage.getItem(CACHE_KEY);
+		if (stored) return new Map(JSON.parse(stored));
+	} catch {
+		return new Map();
+	}
+	return new Map();
+}
+
+function saveCache(cache: Map<string, number>) {
+	try {
+		localStorage.setItem(CACHE_KEY, JSON.stringify([...cache]));
+	} catch {}
+}
+
+// Small helper component to fetch specific game stats for the Jam cards
+function GameJamStats({ placeId, universeId }: { placeId: string; universeId?: number }) {
+	const [stats, setStats] = useState<{ playing: number; visits: number } | null>(null);
+	const [loading, setLoading] = useState(true);
+	const universeCache = useRef<Map<string, number>>(loadCache());
+
+	useEffect(() => {
+		let cancelled = false;
+		async function fetchStats() {
+			try {
+				let id = universeId;
+				if (!id) {
+					const cached = universeCache.current.get(placeId);
+					if (cached) {
+						id = cached;
+					} else {
+						const targetUrl = `https://apis.roblox.com/universes/v1/places/${placeId}/universe`;
+						const data = await fetchThroughProxy(targetUrl);
+						if (data?.universeId) {
+							id = data.universeId;
+							universeCache.current.set(placeId, id);
+							saveCache(universeCache.current);
+						}
+					}
+				}
+
+				if (!id) throw new Error("Could not resolve Universe ID");
+
+				const statsUrl = `https://games.roblox.com/v1/games?universeIds=${id}`;
+				const data = await fetchThroughProxy(statsUrl);
+				const game = data?.data?.[0];
+				if (game && !cancelled) {
+					setStats({ playing: game.playing ?? 0, visits: game.visits ?? 0 });
+				}
+			} catch (err) {
+				console.warn("Jam stats fetch failed (failing silently):", err);
+			} finally {
+				if (!cancelled) setLoading(false);
+			}
+		}
+		fetchStats();
+		return () => {
+			cancelled = true;
+		};
+	}, [placeId, universeId]);
+
+	return (
+		<div className="gamejam-stats">
+			{loading ? (
+				<code className="gamejam-stat loading">Loading stats...</code>
+			) : stats ? (
+				<>
+					<code className="gamejam-stat live">{stats.playing.toLocaleString()} playing</code>
+					<code className="gamejam-stat">{stats.visits.toLocaleString()} visits</code>
+				</>
+			) : null}
+		</div>
+	);
+}
 function RobloxIcon() {
 	return (
 		<svg
@@ -45,8 +191,6 @@ export default function Home() {
 		if (!mainEl) return;
 
 		const handleScroll = () => {
-			// background scrolls slower than the content (classic parallax),
-			// so as you move between sections the grid visibly drifts too
 			const parallaxFactor = 0.35;
 			const offset = mainEl.scrollTop * parallaxFactor;
 			document.body.style.setProperty("--bg-y", `${offset}px`);
@@ -69,10 +213,7 @@ export default function Home() {
 	async function copyDiscord() {
 		await navigator.clipboard.writeText("itzmrratsp");
 		setCopied(true);
-
-		setTimeout(() => {
-			setCopied(false);
-		}, 2000);
+		setTimeout(() => setCopied(false), 2000);
 	}
 
 	return (
@@ -89,9 +230,14 @@ export default function Home() {
 						</li>
 						<li>
 							<a
-								href="#videos"
-								onClick={scrollToSection("videos")}>
-								WORKS
+								href="#stats-jams"
+								onClick={(e) => {
+									e.preventDefault();
+									document
+										.getElementById("stats-jams")
+										?.scrollIntoView({ behavior: "smooth", block: "start" });
+								}}>
+								STATS & JAMS
 							</a>
 						</li>
 					</ul>
@@ -104,9 +250,11 @@ export default function Home() {
 				<div className="hero-content">
 					<div className="hero-top">
 						<div className="image-frame">
-							<img src="/main.png" />
+							<img
+								src="/main.png"
+								alt="Profile"
+							/>
 						</div>
-
 						<div className="terminal-frame">
 							<code className="terminal-tag terminal-tag--dim">~/</code>
 							<Typewriter
@@ -122,8 +270,6 @@ export default function Home() {
 						<code className="terminal-tag terminal-tag--small">I love her 💖</code>
 					</div>
 
-					<CCUFrame></CCUFrame>
-
 					<div className="hero-buttons">
 						<button
 							className="terminal-button"
@@ -131,23 +277,19 @@ export default function Home() {
 							<FaDiscord size={16} />
 							{copied ? "Copied!" : "Discord"}
 						</button>
-
 						<a
 							className="terminal-button terminal-button--outline"
 							href="https://github.com/itzmrratsp"
 							target="_blank"
 							rel="noopener noreferrer">
-							<FaGithub size={16} />
-							GitHub
+							<FaGithub size={16} /> GitHub
 						</a>
-
 						<a
 							className="terminal-button terminal-button--outline"
 							href="https://roblox.com/users/2536605621/profile"
 							target="_blank"
 							rel="noopener noreferrer">
-							<RobloxIcon />
-							Roblox
+							<RobloxIcon /> Roblox
 						</a>
 					</div>
 
@@ -165,30 +307,140 @@ export default function Home() {
 				</div>
 			</section>
 
+			{/* NEW SPLIT SECTION */}
 			<section
-				id="videos"
-				className="hero hero--works">
-				<div className="hero-content">
-					<code className="terminal-tag terminal-tag--small">previous works</code>
-
-					<div className="video-grid">
-						<VideoPlayer
-							src="https://vz-973fa720-e4f.b-cdn.net/40868fc2-03cc-4686-a5ff-ce5b40faa675/playlist.m3u8"
-							title="Clean Keyboard"
-						/>
-
-						<VideoPlayer
-							src="https://vz-973fa720-e4f.b-cdn.net/45e093fe-911b-4e05-b224-9f6f4e701ffb/playlist.m3u8"
-							title="+1 Pogo Stick"
-						/>
-
-						<VideoPlayer
-							src="https://vz-973fa720-e4f.b-cdn.net/3550f645-18b6-405a-9d33-4b0e72304e7e/playlist.m3u8"
-							title="Slide for Dumplings"
-						/>
+				id="stats-jams"
+				className="hero hero-split-container">
+				<div className="hero-split">
+					{/* Left Side: Stats */}
+					<div className="hero-split-panel">
+						<code className="terminal-tag terminal-tag--small section-title">live stats</code>
+						<CCUFrame />
 					</div>
 
-					<code className="copyright">© {new Date().getFullYear()} ItzMrRatsP. All rights reserved.</code>
+					{/* Right Side: Game Jams */}
+					<div className="hero-split-panel">
+						<code className="terminal-tag terminal-tag--small section-title">game jams</code>
+
+						<div className="gamejam-main">
+							<div className="gamejam-summary">
+								<code className="terminal-tag terminal-tag--small">
+									2 jams · 2 wins · built with Gearworks Studios
+								</code>
+							</div>
+
+							<a
+								href="https://www.roblox.com/communities/34692920/Gearworks-Studios#!/about"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="studio-banner">
+								<FaCog
+									size={20}
+									className="studio-banner-icon"
+								/>
+								<code className="studio-banner-name">Gearworks Studios</code>
+							</a>
+
+							<div className="gamejam-grid">
+								{/* 3M1 Card */}
+								<a
+									href="https://www.roblox.com/games/88481183745824/3M1"
+									target="_blank"
+									rel="noopener noreferrer"
+									className="gamejam-card">
+									<GameJamIcon placeId="88481183745824" />
+									<div className="gamejam-badge gamejam-badge--gold">1st place</div>
+									<code className="gamejam-event">RDC 2025</code>
+									<code className="gamejam-game">3M1</code>
+									<div className="gamejam-desc">
+										3 vs 1 asymmetrical survival horror. Three survivors must work together to
+										escape the single monster.
+									</div>
+									<div className="gamejam-meta-row">
+										<span className="gamejam-tag">Theme: Break the System</span>
+										<span className="gamejam-tag">
+											<FaUsers size={12} /> 4-person team
+										</span>
+									</div>
+									<GameJamStats placeId="88481183745824" />
+								</a>
+
+								{/* Malice Card */}
+								<a
+									href="https://www.roblox.com/games/18892236729/MALICE"
+									target="_blank"
+									rel="noopener noreferrer"
+									className="gamejam-card">
+									<GameJamIcon placeId="18892236729" />
+									<div className="gamejam-badge gamejam-badge--silver">2nd place</div>
+									<code className="gamejam-event">Inspire 2024</code>
+									<code className="gamejam-game">Malice</code>
+									<div className="gamejam-desc">
+										Psychological horror platformer. Navigate a corrupted city while evading the
+										relentless pursuit.
+									</div>
+									<div className="gamejam-meta-row">
+										<span className="gamejam-tag">Theme: Time is Your Enemy</span>
+										<span className="gamejam-tag">
+											<FaUsers size={12} /> 4-person team
+										</span>
+									</div>
+									<GameJamStats placeId="18892236729" />
+								</a>
+							</div>
+
+							<div className="team-grid">
+								<a
+									href="https://www.roblox.com/users/2536605621/profile"
+									target="_blank"
+									rel="noopener noreferrer"
+									className="team-member">
+									<FaCode
+										size={18}
+										className="team-member-icon"
+									/>
+									<code className="team-member-name">ItzMrRatsP</code>
+									<code className="team-member-role">Programmer / UI</code>
+								</a>
+								<a
+									href="https://www.roblox.com/users/129843010/profile?friendshipSourceType=PlayerSearch"
+									target="_blank"
+									rel="noopener noreferrer"
+									className="team-member">
+									<FaLightbulb
+										size={18}
+										className="team-member-icon"
+									/>
+									<code className="team-member-name">BigUniverses</code>
+									<code className="team-member-role">Programmer / Ideas / Story</code>
+								</a>
+								<a
+									href="https://www.roblox.com/users/87768826"
+									target="_blank"
+									rel="noopener noreferrer"
+									className="team-member">
+									<FaHammer
+										size={18}
+										className="team-member-icon"
+									/>
+									<code className="team-member-name">Boneblox</code>
+									<code className="team-member-role">Builder / Lead Story Writer</code>
+								</a>
+								<a
+									href="https://www.roblox.com/users/4998832582/profile?friendshipSourceType=PlayerSearch"
+									target="_blank"
+									rel="noopener noreferrer"
+									className="team-member">
+									<FaCube
+										size={18}
+										className="team-member-icon"
+									/>
+									<code className="team-member-name">Stefano_css</code>
+									<code className="team-member-role">Modeler / favorite italian</code>
+								</a>
+							</div>
+						</div>
+					</div>
 				</div>
 			</section>
 		</main>
