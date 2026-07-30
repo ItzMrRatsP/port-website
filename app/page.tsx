@@ -113,6 +113,7 @@ export default function Home() {
 							</a>
 						</li>
 						<li>
+							{/* work? */}
 							<a
 								href="#stats-jams"
 								onClick={(e) => {
