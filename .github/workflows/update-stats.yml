@@ -1,0 +1,30 @@
+name: Update Roblox Stats
+
+on:
+  schedule:
+    - cron: "*/15 * * * *" # every 15 minutes — adjust as you like
+  workflow_dispatch: {} # lets you trigger it manually from the Actions tab
+
+permissions:
+  contents: write
+
+jobs:
+  update-stats:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Fetch latest Roblox stats
+        run: node scripts/fetch-roblox-stats.mjs
+
+      - name: Commit updated stats file
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add public/data/roblox-stats.json
+          git diff --staged --quiet || git commit -m "chore: update roblox stats [skip ci]"
+          git push
