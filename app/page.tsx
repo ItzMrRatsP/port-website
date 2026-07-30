@@ -237,8 +237,8 @@ export default function Home() {
 									<code className="gamejam-event">RDC 2025</code>
 									<code className="gamejam-game">3M1</code>
 									<div className="gamejam-desc">
-										3 vs 1 asymmetrical survival horror. Three survivors must work together to
-										escape the single monster.
+										in 3m1 you're test-subject that is trying to break out of the system by
+										following the system commands.
 									</div>
 									<div className="gamejam-meta-row">
 										<span className="gamejam-tag">Theme: Break the System</span>
@@ -260,8 +260,8 @@ export default function Home() {
 									<code className="gamejam-event">Inspire 2024</code>
 									<code className="gamejam-game">Malice</code>
 									<div className="gamejam-desc">
-										Psychological horror platformer. Navigate a corrupted city while evading the
-										relentless pursuit.
+										Time is money, and money is root of evilness. Time is your money, each level you
+										finish you get money depending on the time you had remaining.
 									</div>
 									<div className="gamejam-meta-row">
 										<span className="gamejam-tag">Theme: Time is Your Enemy</span>
