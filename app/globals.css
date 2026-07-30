@@ -625,6 +625,8 @@ nav a:hover {
 	height: 100%;
 	object-fit: cover;
 	display: block;
+	-webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+	mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
 }
 
 .game-thumbnail-skeleton {
