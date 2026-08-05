@@ -35,6 +35,7 @@ function GameJamStats({ placeId }: { placeId: string }) {
 		</div>
 	);
 }
+
 function RobloxIcon() {
 	return (
 		<svg
@@ -47,6 +48,17 @@ function RobloxIcon() {
 	);
 }
 
+function DevMeIcon() {
+	return (
+		<svg
+			width="16"
+			height="16"
+			viewBox="0 0 24 24"
+			fill="currentColor">
+			<path d="M0 1.12L0.45 7.05L13.91 7.42L16.91 10.42L16.88 13.69L13.91 16.54L7.27 16.5L6.41 13.84L0 14.25L0.38 18.56L3.52 22.46L6.67 23.62L14.29 23.62L18.56 22.09L21.71 19.31L23.96 14.59L23.96 9.75L22.46 5.77L19.69 2.62L14.29 0.34L1.05 0.34Z" />
+		</svg>
+	);
+}
 function Typewriter({ text, speed = 100 }: { text: string; speed?: number }) {
 	const [count, setCount] = useState(0);
 
@@ -163,13 +175,13 @@ export default function Home() {
 							<FaDiscord size={16} />
 							{copied ? "Copied!" : "Discord"}
 						</button>
-						{/* <a
+						<a
 							className="terminal-button terminal-button--outline"
-							href="https://github.com/itzmrratsp"
+							href="https://devme.app/@itzmrratsp"
 							target="_blank"
 							rel="noopener noreferrer">
-							<FaGithub size={16} /> GitHub
-						</a> */}
+							<DevMeIcon /> DevMe
+						</a>
 						<a
 							className="terminal-button terminal-button--outline"
 							href="https://roblox.com/users/2536605621/profile"
