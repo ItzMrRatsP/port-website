@@ -152,7 +152,8 @@ export default function Home() {
 					<div className="hero-info">
 						<code className="terminal-tag terminal-tag--small">20 years old</code>
 						<code className="terminal-tag terminal-tag--small">5 years of experience</code>
-						<code className="terminal-tag terminal-tag--small">I love her 💖</code>
+						<code className="terminal-tag terminal-tag--small">experienced in luau</code>
+						{/* <code className="terminal-tag terminal-tag--small">I love her 💖</code> */}
 					</div>
 
 					<div className="hero-buttons">
@@ -162,13 +163,13 @@ export default function Home() {
 							<FaDiscord size={16} />
 							{copied ? "Copied!" : "Discord"}
 						</button>
-						<a
+						{/* <a
 							className="terminal-button terminal-button--outline"
 							href="https://github.com/itzmrratsp"
 							target="_blank"
 							rel="noopener noreferrer">
 							<FaGithub size={16} /> GitHub
-						</a>
+						</a> */}
 						<a
 							className="terminal-button terminal-button--outline"
 							href="https://roblox.com/users/2536605621/profile"
