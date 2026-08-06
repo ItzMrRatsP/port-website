@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-08-06T00:55:19.893Z",
+  "generatedAt": "2026-08-06T00:56:03.251Z",
   "games": {
     "132813250731469": {
       "placeId": "132813250731469",
       "universeId": 6483209208,
       "rootPlaceId": 132813250731469,
       "name": "The Hybrid Cafe ☕",
-      "playing": 241,
-      "visits": 26306569,
+      "playing": 245,
+      "visits": 26306584,
       "icon": "https://tr.rbxcdn.com/180DAY-3576b0c50bf7c3ffd131aa928fc3b677/512/512/Image/Png/noFilter",
       "thumbnail": "https://tr.rbxcdn.com/180DAY-152de29f5d68041fe9c44fc9f3e4f2d4/768/432/Image/Png/noFilter"
     },
@@ -37,7 +37,7 @@
       "rootPlaceId": 16127140865,
       "name": "Prototype",
       "playing": 2,
-      "visits": 4757540,
+      "visits": 4757543,
       "icon": "https://tr.rbxcdn.com/180DAY-8f36697a7660a78e93acb6033a5424b7/512/512/Image/Png/noFilter",
       "thumbnail": "https://tr.rbxcdn.com/180DAY-0d2fc40e9343afd52f93862c8dcac074/768/432/Image/Png/noFilter"
     },
