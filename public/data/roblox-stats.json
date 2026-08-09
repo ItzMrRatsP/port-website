@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-09T03:20:24.245Z",
+  "generatedAt": "2026-08-09T03:20:56.912Z",
   "games": {
     "132813250731469": {
       "placeId": "132813250731469",
@@ -37,7 +37,7 @@
       "rootPlaceId": 16127140865,
       "name": "Prototype",
       "playing": 7,
-      "visits": 4761323,
+      "visits": 4761324,
       "icon": "https://tr.rbxcdn.com/180DAY-8f36697a7660a78e93acb6033a5424b7/512/512/Image/Png/noFilter",
       "thumbnail": "https://tr.rbxcdn.com/180DAY-0d2fc40e9343afd52f93862c8dcac074/768/432/Image/Png/noFilter"
     },
