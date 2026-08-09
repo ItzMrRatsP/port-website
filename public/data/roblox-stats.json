@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-09T11:45:25.203Z",
+  "generatedAt": "2026-08-09T11:45:46.977Z",
   "games": {
     "132813250731469": {
       "placeId": "132813250731469",
@@ -26,7 +26,7 @@
       "universeId": 4922060458,
       "rootPlaceId": 14228650765,
       "name": "Nexus [Connect 2023 Winner]",
-      "playing": 2,
+      "playing": 0,
       "visits": 2220475,
       "icon": "https://tr.rbxcdn.com/180DAY-8c6a2d2e8f248d265eb408bca04b5c31/512/512/Image/Png/noFilter",
       "thumbnail": "https://tr.rbxcdn.com/180DAY-9f892a69a0b57fe7a70d75474fdb1506/768/432/Image/Png/noFilter"
@@ -37,7 +37,7 @@
       "rootPlaceId": 16127140865,
       "name": "Prototype",
       "playing": 7,
-      "visits": 4761631,
+      "visits": 4761632,
       "icon": "https://tr.rbxcdn.com/180DAY-8f36697a7660a78e93acb6033a5424b7/512/512/Image/Png/noFilter",
       "thumbnail": "https://tr.rbxcdn.com/180DAY-0d2fc40e9343afd52f93862c8dcac074/768/432/Image/Png/noFilter"
     },
