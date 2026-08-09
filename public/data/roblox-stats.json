@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-09T23:13:43.186Z",
+  "generatedAt": "2026-08-09T23:15:23.192Z",
   "games": {
     "132813250731469": {
       "placeId": "132813250731469",
@@ -7,7 +7,7 @@
       "rootPlaceId": 132813250731469,
       "name": "The Hybrid Cafe ☕",
       "playing": 211,
-      "visits": 26387670,
+      "visits": 26387691,
       "icon": "https://tr.rbxcdn.com/180DAY-3576b0c50bf7c3ffd131aa928fc3b677/512/512/Image/Png/noFilter",
       "thumbnail": "https://tr.rbxcdn.com/180DAY-152de29f5d68041fe9c44fc9f3e4f2d4/768/432/Image/Png/noFilter"
     },
@@ -46,8 +46,8 @@
       "universeId": 10003846420,
       "rootPlaceId": 125700405216363,
       "name": "🦎Camo Or Snipe! 💥",
-      "playing": 123,
-      "visits": 30857349,
+      "playing": 139,
+      "visits": 30857382,
       "icon": "https://tr.rbxcdn.com/180DAY-44a3ca41d1db85f165e572c48ad25689/512/512/Image/Png/noFilter",
       "thumbnail": "https://tr.rbxcdn.com/180DAY-429de35dc3bbfc5e90adbe99b0b63529/768/432/Image/Png/noFilter"
     },
