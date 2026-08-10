@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-08-10T17:10:37.688Z",
+  "generatedAt": "2026-08-10T17:15:24.240Z",
   "games": {
     "132813250731469": {
       "placeId": "132813250731469",
       "universeId": 6483209208,
       "rootPlaceId": 132813250731469,
       "name": "The Hybrid Cafe ☕",
-      "playing": 230,
-      "visits": 26399480,
+      "playing": 217,
+      "visits": 26399550,
       "icon": "https://tr.rbxcdn.com/180DAY-3576b0c50bf7c3ffd131aa928fc3b677/512/512/Image/Png/noFilter",
       "thumbnail": "https://tr.rbxcdn.com/180DAY-152de29f5d68041fe9c44fc9f3e4f2d4/768/432/Image/Png/noFilter"
     },
@@ -27,7 +27,7 @@
       "rootPlaceId": 14228650765,
       "name": "Nexus [Connect 2023 Winner]",
       "playing": 6,
-      "visits": 2221045,
+      "visits": 2221049,
       "icon": "https://tr.rbxcdn.com/180DAY-8c6a2d2e8f248d265eb408bca04b5c31/512/512/Image/Png/noFilter",
       "thumbnail": "https://tr.rbxcdn.com/180DAY-9f892a69a0b57fe7a70d75474fdb1506/768/432/Image/Png/noFilter"
     },
@@ -46,8 +46,8 @@
       "universeId": 10003846420,
       "rootPlaceId": 125700405216363,
       "name": "🦎Camo Or Snipe! 💥",
-      "playing": 105,
-      "visits": 30872845,
+      "playing": 101,
+      "visits": 30872916,
       "icon": "https://tr.rbxcdn.com/180DAY-44a3ca41d1db85f165e572c48ad25689/512/512/Image/Png/noFilter",
       "thumbnail": "https://tr.rbxcdn.com/180DAY-429de35dc3bbfc5e90adbe99b0b63529/768/432/Image/Png/noFilter"
     },
