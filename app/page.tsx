@@ -148,7 +148,7 @@ export default function Home() {
 					<div className="hero-top">
 						<div className="image-frame">
 							<img
-								src="/main.png"
+								src="/art.png"
 								alt="Profile"
 							/>
 						</div>
