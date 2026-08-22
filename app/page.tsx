@@ -16,6 +16,7 @@ import {
 import CCUFrame from "./ccuFrame";
 import GameJamIcon from "./gamejam-icon";
 import { useRobloxStats } from "./use-roblox-stats";
+import ThemeToggle from "./theme-toggle";
 
 // Small helper component to show live stats on each Jam card, sourced
 // from the static /data/roblox-stats.json file — no proxy, no CORS.
@@ -139,6 +140,7 @@ export default function Home() {
 						</li>
 					</ul>
 				</nav>
+				<ThemeToggle />
 			</header>
 
 			<section
@@ -150,6 +152,12 @@ export default function Home() {
 							<img
 								src="/art.png"
 								alt="Profile"
+								className="art-dark"
+							/>
+							<img
+								src="/light-art.png"
+								alt="Profile"
+								className="art-light"
 							/>
 						</div>
 						<div className="terminal-frame">

@@ -25,7 +25,17 @@ export default function RootLayout({
 	return (
 		<html
 			lang="en"
+			suppressHydrationWarning
 			className={`${inter.variable} ${jetbrainsMono.variable}`}>
+			<head>
+				{/* Restore the saved light/dark theme synchronously, before paint,
+				    so returning visitors don't see a flash of the wrong theme. */}
+				<script
+					dangerouslySetInnerHTML={{
+						__html: `(function(){try{var t=localStorage.getItem('site-theme');if(t==='light'){document.documentElement.setAttribute('data-theme','light');}}catch(e){}})();`,
+					}}
+				/>
+			</head>
 			<body>
 				{/* Floating Decorations */}
 				{children}
