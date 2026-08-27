@@ -10,32 +10,14 @@ import {
 	FaHammer,
 	FaCube,
 	FaCog,
-	FaUsers,
-	FaCalendarAlt,
+	FaLaptopCode,
+	FaCoins,
+	FaChevronDown,
 } from "react-icons/fa";
 import CCUFrame from "./ccuFrame";
 import GameJamIcon from "./gamejam-icon";
-import { useRobloxStats } from "./use-roblox-stats";
 import ThemeToggle from "./theme-toggle";
-
-// Small helper component to show live stats on each Jam card, sourced
-// from the static /data/roblox-stats.json file — no proxy, no CORS.
-function GameJamStats({ placeId }: { placeId: string }) {
-	const { stats, loading } = useRobloxStats(placeId);
-
-	return (
-		<div className="gamejam-stats">
-			{loading ? (
-				<code className="gamejam-stat loading">Loading stats...</code>
-			) : stats ? (
-				<>
-					<code className="gamejam-stat live">{stats.playing.toLocaleString()} playing</code>
-					<code className="gamejam-stat">{stats.visits.toLocaleString()} visits</code>
-				</>
-			) : null}
-		</div>
-	);
-}
+import Reviews from "./reviews";
 
 function RobloxIcon() {
 	return (
@@ -122,11 +104,17 @@ export default function Home() {
 							<a
 								href="#home"
 								onClick={scrollToSection("home")}>
-								<span className="nav-prompt">~/</span> HOME
+								<span className="nav-prompt">ls ~/</span> HOME
 							</a>
 						</li>
 						<li>
-							{/* work? */}
+							<a
+								href="#plans"
+								onClick={scrollToSection("plans")}>
+								<span className="nav-prompt">ls ~/</span> PLANS
+							</a>
+						</li>
+						{/* <li>
 							<a
 								href="#stats-jams"
 								onClick={(e) => {
@@ -137,7 +125,7 @@ export default function Home() {
 								}}>
 								<span className="nav-prompt">~/</span> STATS & JAMS
 							</a>
-						</li>
+						</li> */}
 					</ul>
 				</nav>
 				<ThemeToggle />
@@ -148,6 +136,15 @@ export default function Home() {
 				className="hero">
 				<div className="hero-content">
 					<div className="hero-top">
+						<code className="terminal-tag terminal-tag--dim">cat ~/whoami.json</code>
+						{/* <div className="terminal-frame">
+							<code className="terminal-tag terminal-tag--dim">~/</code>
+							<Typewriter
+								text="ItzMrRatsP"
+								speed={100}
+
+							/>
+						</div> */}
 						<div className="image-frame">
 							<img
 								src="/light-art.png"
@@ -155,21 +152,29 @@ export default function Home() {
 								className="art-light"
 							/>
 						</div>
-						<div className="terminal-frame">
-							<code className="terminal-tag terminal-tag--dim">~/</code>
-							<Typewriter
-								text="ItzMrRatsP"
-								speed={100}
-							/>
-						</div>
 					</div>
 
-					<div className="hero-info">
-						<code className="terminal-tag terminal-tag--small">20 years old</code>
-						<code className="terminal-tag terminal-tag--small">5 years of experience</code>
-						<code className="terminal-tag terminal-tag--small">experienced in luau</code>
-						{/* <code className="terminal-tag terminal-tag--small">I love her 💖</code> */}
-					</div>
+					{/* <div className="hero-info"> */}
+					{/* <code className="terminal-tag terminal-tag--small">20 years old</code> */}
+					{/* <code className="terminal-tag terminal-tag--small">experienced in luau</code> */}
+					{/* <code className="terminal-tag terminal-tag--small"></code> */}
+					{/* <code className="terminal-tag terminal-tag--small">I love her 💖</code> */}
+					{/* </div> */}
+
+					<p className="hero-description">
+						Full-stack Roblox developer building games, systems, and everything in between - mentored by{" "}
+						<a
+							href="https://dylwithlt.github.io/"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="hero-description-link">
+							DylWithIt
+						</a>
+						. I've spent the last couple years building on Roblox, from gameplay systems to full game loops.
+						I care about clean code, fast iteration, and turning weird ideas into something people can
+						actually play. Outside of scripting I'm usually learning something new or helping other devs get
+						unstuck.
+					</p>
 
 					<div className="hero-buttons">
 						<button
@@ -194,156 +199,126 @@ export default function Home() {
 						</a>
 					</div>
 
-					<p className="hero-description">
-						Full-stack Roblox developer building games, systems, and everything in between. Mentored by{" "}
-						<a
-							href="https://dylwithlt.github.io/"
-							target="_blank"
-							rel="noopener noreferrer"
-							className="hero-description-link">
-							DylWithIt
-						</a>
-						.
-					</p>
+					<a
+						href="#plans"
+						onClick={scrollToSection("plans")}
+						className="hero-cta-banner">
+						<span>Want to work together?</span>
+						<span className="hero-cta-banner-link">
+							View Plans <span className="hero-cta-banner-arrow">→</span>
+						</span>
+					</a>
+				</div>
+
+				<a
+					href="#plans"
+					onClick={scrollToSection("plans")}
+					className="scroll-cue"
+					aria-label="Scroll to plans">
+					<FaChevronDown size={14} />
+				</a>
+			</section>
+
+			<section
+				id="payment"
+				className="hero">
+				<div
+					id="plans"
+					className="plans-wrap">
+					<div className="plans-heading">
+						<code className="terminal-tag terminal-tag--dim">cat ~/plans.json</code>
+						<h2>Work with me</h2>
+						<p>
+							Two ways to get help - pick whichever fits what you need, then hit me up on Discord to lock
+							in details.
+						</p>
+					</div>
+
+					{/* <div className="plans-status">
+						<span className="plans-status-dot" />
+						<span className="plans-status-text">Available for new projects</span>
+						<span className="plans-status-sep">•</span>
+						<span className="plans-status-sub">Usually responds within a few hours</span>
+					</div> */}
+
+					<div className="plans-grid">
+						<div className="plan-card plan-card--featured">
+							<span className="plan-card-badge">Most booked</span>
+							<div className="plan-card-top">
+								<div className="plan-card-heading">
+									<span className="plan-card-icon">
+										<FaLaptopCode size={16} />
+									</span>
+									<div>
+										<div className="plan-card-title">Long Term</div>
+										<div className="plan-card-tagline">ongoing hourly development</div>
+									</div>
+								</div>
+								<div className="plan-card-price">
+									<strong>$20</strong>
+									<span>/hr</span>
+								</div>
+							</div>
+							<ul className="plan-card-features">
+								<li>Systems, mechanics & gameplay scripting</li>
+								<li>Tooling, optimization & bug fixes</li>
+								<li>Full projects or drop-in collab work</li>
+								<li>Regular progress updates as we go</li>
+							</ul>
+						</div>
+
+						<div className="plan-card">
+							<div className="plan-card-top">
+								<div className="plan-card-heading">
+									<span className="plan-card-icon">
+										<FaHammer size={16} />
+									</span>
+									<div>
+										<div className="plan-card-title">Short Term</div>
+										<div className="plan-card-tagline">commission-based / single systems</div>
+									</div>
+								</div>
+								<div className="plan-card-price">
+									<strong>$40</strong>
+									<span>min</span>
+								</div>
+							</div>
+							<ul className="plan-card-features">
+								<li>One-off systems - shops, inventories, admin panels</li>
+								<li>Fixed price, scoped before we start</li>
+								<li>Good fit for a single feature or fix</li>
+								<li>Delivered complete, ready to drop in</li>
+							</ul>
+						</div>
+					</div>
+
+					<div className="process-strip">
+						<div className="process-step">
+							<span className="process-step-num">01</span>
+							<div className="process-step-title">Reach out</div>
+							<p className="process-step-desc">Message me on Discord with what you need</p>
+						</div>
+						<div className="process-step">
+							<span className="process-step-num">02</span>
+							<div className="process-step-title">Get a quote</div>
+							<p className="process-step-desc">I'll scope the work and give you a price</p>
+						</div>
+						<div className="process-step">
+							<span className="process-step-num">03</span>
+							<div className="process-step-title">I get to work</div>
+							<p className="process-step-desc">Regular updates as progress happens</p>
+						</div>
+						<div className="process-step">
+							<span className="process-step-num">04</span>
+							<div className="process-step-title">Delivery</div>
+							<p className="process-step-desc">Final handoff plus any revisions</p>
+						</div>
+					</div>
+					{/* <Reviews /> */}
 				</div>
 			</section>
 
 			{/* NEW SPLIT SECTION */}
-			<section
-				id="stats-jams"
-				className="hero hero-split-container">
-				<div className="hero-split">
-					{/* Left Side: Stats */}
-					<div className="hero-split-panel">
-						<code className="terminal-tag terminal-tag--small section-title">live stats</code>
-						<CCUFrame />
-					</div>
-
-					{/* Right Side: Game Jams */}
-					<div className="hero-split-panel">
-						<code className="terminal-tag terminal-tag--small section-title">game jams</code>
-
-						<div className="gamejam-main">
-							<div className="gamejam-summary">
-								<code className="terminal-tag terminal-tag--small">
-									2 jams · 2 wins · built with Gearworks Studios
-								</code>
-							</div>
-
-							<a
-								href="https://www.roblox.com/communities/34692920/Gearworks-Studios#!/about"
-								target="_blank"
-								rel="noopener noreferrer"
-								className="studio-banner">
-								<FaCog
-									size={20}
-									className="studio-banner-icon"
-								/>
-								<code className="studio-banner-name">Gearworks Studios</code>
-							</a>
-
-							<div className="gamejam-grid">
-								{/* 3M1 Card */}
-								<a
-									href="https://www.roblox.com/games/88481183745824/3M1"
-									target="_blank"
-									rel="noopener noreferrer"
-									className="gamejam-card">
-									<GameJamIcon placeId="88481183745824" />
-									<div className="gamejam-badge gamejam-badge--gold">1st place</div>
-									<code className="gamejam-event">RDC 2025</code>
-									<code className="gamejam-game">3M1</code>
-									<div className="gamejam-desc">
-										in 3m1 you're test-subject that is trying to break out of the system by
-										following the system commands.
-									</div>
-									<div className="gamejam-meta-row">
-										<span className="gamejam-tag">Theme: Break the System</span>
-										<span className="gamejam-tag">
-											<FaUsers size={12} /> 4-person team
-										</span>
-									</div>
-									<GameJamStats placeId="88481183745824" />
-								</a>
-
-								{/* Malice Card */}
-								<a
-									href="https://www.roblox.com/games/18892236729/MALICE"
-									target="_blank"
-									rel="noopener noreferrer"
-									className="gamejam-card">
-									<GameJamIcon placeId="18892236729" />
-									<div className="gamejam-badge gamejam-badge--silver">2nd place</div>
-									<code className="gamejam-event">Inspire 2024</code>
-									<code className="gamejam-game">Malice</code>
-									<div className="gamejam-desc">
-										Time is money, and money is root of evilness. Time is your money, each level you
-										finish you get money depending on the time you had remaining.
-									</div>
-									<div className="gamejam-meta-row">
-										<span className="gamejam-tag">Theme: Time is Your Enemy</span>
-										<span className="gamejam-tag">
-											<FaUsers size={12} /> 4-person team
-										</span>
-									</div>
-									<GameJamStats placeId="18892236729" />
-								</a>
-							</div>
-
-							<div className="team-grid">
-								<a
-									href="https://www.roblox.com/users/2536605621/profile"
-									target="_blank"
-									rel="noopener noreferrer"
-									className="team-member">
-									<FaCode
-										size={18}
-										className="team-member-icon"
-									/>
-									<code className="team-member-name">ItzMrRatsP</code>
-									<code className="team-member-role">Programmer / UI</code>
-								</a>
-								<a
-									href="https://www.roblox.com/users/129843010/profile?friendshipSourceType=PlayerSearch"
-									target="_blank"
-									rel="noopener noreferrer"
-									className="team-member">
-									<FaLightbulb
-										size={18}
-										className="team-member-icon"
-									/>
-									<code className="team-member-name">BigUniverses</code>
-									<code className="team-member-role">Programmer / Ideas / Story</code>
-								</a>
-								<a
-									href="https://www.roblox.com/users/87768826"
-									target="_blank"
-									rel="noopener noreferrer"
-									className="team-member">
-									<FaHammer
-										size={18}
-										className="team-member-icon"
-									/>
-									<code className="team-member-name">Boneblox</code>
-									<code className="team-member-role">Builder / Lead Story Writer</code>
-								</a>
-								<a
-									href="https://www.roblox.com/users/4998832582/profile?friendshipSourceType=PlayerSearch"
-									target="_blank"
-									rel="noopener noreferrer"
-									className="team-member">
-									<FaCube
-										size={18}
-										className="team-member-icon"
-									/>
-									<code className="team-member-name">Stefano_css</code>
-									<code className="team-member-role">Modeler / favorite italian</code>
-								</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
 		</main>
 	);
 }
