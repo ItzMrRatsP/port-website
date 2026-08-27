@@ -150,11 +150,6 @@ export default function Home() {
 					<div className="hero-top">
 						<div className="image-frame">
 							<img
-								src="/art.png"
-								alt="Profile"
-								className="art-dark"
-							/>
-							<img
 								src="/light-art.png"
 								alt="Profile"
 								className="art-light"
