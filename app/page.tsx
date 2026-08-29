@@ -209,14 +209,6 @@ export default function Home() {
 						</span>
 					</a>
 				</div>
-
-				<a
-					href="#plans"
-					onClick={scrollToSection("plans")}
-					className="scroll-cue"
-					aria-label="Scroll to plans">
-					<FaChevronDown size={14} />
-				</a>
 			</section>
 
 			<section
