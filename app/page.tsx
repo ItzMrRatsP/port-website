@@ -1,7 +1,5 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import VideoPlayer from "./video-player";
-
 import {
 	FaGithub,
 	FaDiscord,
@@ -42,6 +40,38 @@ function DevMeIcon() {
 		</svg>
 	);
 }
+function SectionConnector() {
+	return (
+		<div
+			className="section-connector"
+			aria-hidden="true">
+			<svg
+				className="section-connector-svg"
+				viewBox="0 0 120 232"
+				xmlns="http://www.w3.org/2000/svg">
+				<circle
+					className="section-connector-start"
+					cx="60"
+					cy="8"
+					r="5"
+				/>
+				<path
+					className="section-connector-path"
+					d="M60 12 C 100 44, 20 68, 60 100 C 100 132, 16 156, 56 188"
+				/>
+				<text
+					className="section-connector-x"
+					x="60"
+					y="220"
+					textAnchor="middle"
+					fontSize="28">
+					✕
+				</text>
+			</svg>
+		</div>
+	);
+}
+
 function Typewriter({ text, speed = 100 }: { text: string; speed?: number }) {
 	const [count, setCount] = useState(0);
 
@@ -105,6 +135,13 @@ export default function Home() {
 								href="#home"
 								onClick={scrollToSection("home")}>
 								<span className="nav-prompt">ls ~/</span> HOME
+							</a>
+						</li>
+						<li>
+							<a
+								href="#projects"
+								onClick={scrollToSection("projects")}>
+								<span className="nav-prompt">ls ~/</span> PROJECTS
 							</a>
 						</li>
 						<li>
@@ -209,11 +246,89 @@ export default function Home() {
 						</span>
 					</a>
 				</div>
+
+				{/* <a
+					href="#projects"
+					onClick={scrollToSection("projects")}
+					className="scroll-cue"
+					aria-label="Scroll to projects">
+					<FaChevronDown size={14} />
+				</a> */}
+			</section>
+
+			{/* PROJECTS SECTION */}
+			<section
+				id="projects"
+				className="hero hero--compact">
+				<div className="hero-content">
+					<div className="plans-heading">
+						<code className="terminal-tag terminal-tag--dim">cat ~/projects.json</code>
+						<h2>Selected Work</h2>
+						<p>A few things I've built or contributed to on Roblox — click through to check them out.</p>
+					</div>
+
+					{/* TODO: swap in your real project list — link should point at the live Roblox game page */}
+					<div className="project-list">
+						<a
+							href="https://www.roblox.com/games/88481183745824/3M1"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="project-row">
+							<div className="project-row-info">
+								<code className="project-row-name">3M1</code>
+								<code className="project-row-desc">
+									Systems-driven escape game built for RDC 2025 — 1st place.
+								</code>
+							</div>
+							<span className="project-row-arrow">↗</span>
+						</a>
+
+						<a
+							href="https://www.roblox.com/games/18892236729/MALICE"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="project-row">
+							<div className="project-row-info">
+								<code className="project-row-name">Malice</code>
+								<code className="project-row-desc">
+									Time-based scoring game built for Inspire 2024 — 2nd place.
+								</code>
+							</div>
+							<span className="project-row-arrow">↗</span>
+						</a>
+
+						<a
+							href="https://www.roblox.com/games/132813250731469"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="project-row">
+							<div className="project-row-info">
+								<code className="project-row-name">The Hybrid Cafe</code>
+								<code className="project-row-desc">
+									A cozy cafe roleplay experience with custom systems.
+								</code>
+							</div>
+							<span className="project-row-arrow">↗</span>
+						</a>
+
+						<a
+							href="https://www.roblox.com/games/123061227632512"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="project-row">
+							<div className="project-row-info">
+								<code className="project-row-name">Camo Or Snipe!</code>
+								<code className="project-row-desc">A fast-paced hide-and-seek style shooter.</code>
+							</div>
+							<span className="project-row-arrow">↗</span>
+						</a>
+					</div>
+				</div>
 			</section>
 
 			<section
 				id="payment"
-				className="hero">
+				className="hero hero--compact">
 				<div
 					id="plans"
 					className="plans-wrap">

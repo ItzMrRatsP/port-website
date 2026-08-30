@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import Hls from "hls.js";
 
-export default function VideoPlayer({ src, title }: { src: string; title: string }) {
+export default function VideoPlayer({ src, title, poster }: { src: string; title: string; poster?: string }) {
 	const videoRef = useRef<HTMLVideoElement>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
 	const hlsRef = useRef<Hls | null>(null);
@@ -177,19 +177,30 @@ export default function VideoPlayer({ src, title }: { src: string; title: string
 					<code>{error}</code>
 				</div>
 			) : (
-				<video
-					ref={videoRef}
-					loop
-					playsInline
-					preload="auto"
-					onTimeUpdate={updateProgress}
-					onPlay={() => setPlaying(true)}
-					onPause={() => setPlaying(false)}
-					onError={(e) => {
-						const mediaError = e.currentTarget.error;
-						console.error("Video element error:", mediaError?.code, mediaError?.message);
-					}}
-				/>
+				<>
+					<video
+						ref={videoRef}
+						poster={poster}
+						loop
+						playsInline
+						preload="auto"
+						onTimeUpdate={updateProgress}
+						onPlay={() => setPlaying(true)}
+						onPause={() => setPlaying(false)}
+						onError={(e) => {
+							const mediaError = e.currentTarget.error;
+							console.error("Video element error:", mediaError?.code, mediaError?.message);
+						}}
+					/>
+					{!playing && (
+						<button
+							className="video-play-overlay"
+							onClick={togglePlay}
+							aria-label={`Play ${title}`}>
+							▶
+						</button>
+					)}
+				</>
 			)}
 
 			<div className="video-controls">
