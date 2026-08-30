@@ -264,10 +264,9 @@ export default function Home() {
 					<div className="plans-heading">
 						<code className="terminal-tag terminal-tag--dim">cat ~/projects.json</code>
 						<h2>Selected Work</h2>
-						<p>A few things I've built or contributed to on Roblox — click through to check them out.</p>
+						<p>A few things I've built or contributed to on Roblox - click through to check them out.</p>
 					</div>
 
-					{/* TODO: swap in your real project list — link should point at the live Roblox game page */}
 					<div className="project-list">
 						<a
 							href="https://www.roblox.com/games/88481183745824/3M1"
@@ -312,7 +311,7 @@ export default function Home() {
 						</a>
 
 						<a
-							href="https://www.roblox.com/games/123061227632512"
+							href="https://www.roblox.com/games/125700405216363"
 							target="_blank"
 							rel="noopener noreferrer"
 							className="project-row">
@@ -361,10 +360,16 @@ export default function Home() {
 										<div className="plan-card-tagline">ongoing hourly development</div>
 									</div>
 								</div>
-								<div className="plan-card-price">
-									<strong>$20</strong>
-									<span>/hr</span>
-								</div>
+								<li>
+									<div className="plan-card-price">
+										<strong>$20</strong>
+										<span>/hr</span>
+									</div>
+									<div className="plan-card-price--gold">
+										<strong>5K Robux</strong>
+										<span> /hr</span>
+									</div>
+								</li>
 							</div>
 							<ul className="plan-card-features">
 								<li>Systems, mechanics & gameplay scripting</li>
@@ -385,10 +390,16 @@ export default function Home() {
 										<div className="plan-card-tagline">commission-based / single systems</div>
 									</div>
 								</div>
-								<div className="plan-card-price">
-									<strong>$40</strong>
-									<span>min</span>
-								</div>
+								<li>
+									<div className="plan-card-price">
+										<strong>$40</strong>
+										<span>min</span>
+									</div>
+									<div className="plan-card-price--gold">
+										<strong>10K Robux</strong>
+										<span> min</span>
+									</div>
+								</li>
 							</div>
 							<ul className="plan-card-features">
 								<li>One-off systems - shops, inventories, admin panels</li>
@@ -421,7 +432,6 @@ export default function Home() {
 							<p className="process-step-desc">Final handoff plus any revisions</p>
 						</div>
 					</div>
-					{/* <Reviews /> */}
 				</div>
 			</section>
 
