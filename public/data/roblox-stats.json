@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-09-03T02:25:25.993Z",
+  "generatedAt": "2026-09-03T02:30:30.273Z",
   "games": {
     "132813250731469": {
       "placeId": "132813250731469",
       "universeId": 6483209208,
       "rootPlaceId": 132813250731469,
       "name": "The Hybrid Cafe ☕",
-      "playing": 86,
-      "visits": 26713831,
+      "playing": 83,
+      "visits": 26713859,
       "icon": "https://tr.rbxcdn.com/180DAY-3576b0c50bf7c3ffd131aa928fc3b677/512/512/Image/Png/noFilter",
       "thumbnail": "https://tr.rbxcdn.com/180DAY-152de29f5d68041fe9c44fc9f3e4f2d4/768/432/Image/Png/noFilter"
     },
@@ -17,7 +17,7 @@
       "rootPlaceId": 123061227632512,
       "name": "+1 Jump Lava Escape🔥",
       "playing": 0,
-      "visits": 12693,
+      "visits": 0,
       "icon": "https://tr.rbxcdn.com/180DAY-e74042bc28d8bca33f965af83194df34/512/512/Image/Png/noFilter",
       "thumbnail": "https://tr.rbxcdn.com/180DAY-ac48fce73f60145801df95483f692353/768/432/Image/Png/noFilter"
     },
@@ -46,8 +46,8 @@
       "universeId": 10003846420,
       "rootPlaceId": 125700405216363,
       "name": "🦎Camo Or Snipe! 💥",
-      "playing": 82,
-      "visits": 31304064,
+      "playing": 71,
+      "visits": 31304114,
       "icon": "https://tr.rbxcdn.com/180DAY-44a3ca41d1db85f165e572c48ad25689/512/512/Image/Png/noFilter",
       "thumbnail": "https://tr.rbxcdn.com/180DAY-429de35dc3bbfc5e90adbe99b0b63529/768/432/Image/Png/noFilter"
     },
@@ -57,7 +57,7 @@
       "rootPlaceId": 88481183745824,
       "name": "3M1 [RDC 2025 🥇]",
       "playing": 0,
-      "visits": 1645,
+      "visits": 0,
       "icon": "https://tr.rbxcdn.com/180DAY-aec77fab5d97b0f1657c721cd9756011/512/512/Image/Png/noFilter",
       "thumbnail": "https://tr.rbxcdn.com/180DAY-119e05f54229ca93253e40d811cc8c1a/768/432/Image/Png/noFilter"
     },
@@ -67,7 +67,7 @@
       "rootPlaceId": 18892236729,
       "name": "MALICE [LEGACY][INSPIRE 2024 🥈]",
       "playing": 0,
-      "visits": 514,
+      "visits": 0,
       "icon": "https://tr.rbxcdn.com/180DAY-1e867ea80702df6a1a07bc7254f99997/512/512/Image/Png/noFilter",
       "thumbnail": "https://tr.rbxcdn.com/180DAY-ed16bdc8c68c09a869dcd503fc206541/768/432/Image/Png/noFilter"
     }
