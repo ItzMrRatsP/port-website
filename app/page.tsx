@@ -283,6 +283,20 @@ export default function Home() {
 						</a>
 
 						<a
+							href="https://www.roblox.com/games/125078909503397/1-Slide-Height-for-Dumplings"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="project-row">
+							<div className="project-row-info">
+								<code className="project-row-name">+1 Slide Height for Dumplings</code>
+								<code className="project-row-desc">
+									Fully functional game based on squishy trend, built for a commissioner.
+								</code>
+							</div>
+							<span className="project-row-arrow">↗</span>
+						</a>
+
+						<a
 							href="https://www.roblox.com/games/18892236729/MALICE"
 							target="_blank"
 							rel="noopener noreferrer"
