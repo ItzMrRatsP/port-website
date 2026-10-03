@@ -1,21 +1,29 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Fraunces, Hanken_Grotesk } from "next/font/google";
+import BackgroundMusic from "./background-music";
 import "./globals.css";
 
-const inter = Inter({
+// A soft, slightly rounded serif for headings, and a quiet grotesk for text.
+const fraunces = Fraunces({
 	subsets: ["latin"],
-	variable: "--font-inter",
+	variable: "--font-display",
+	axes: ["SOFT", "opsz"],
+	style: ["normal", "italic"],
 });
 
-const jetbrainsMono = JetBrains_Mono({
+const hanken = Hanken_Grotesk({
 	subsets: ["latin"],
-	variable: "--font-jetbrains-mono",
+	variable: "--font-body",
 });
 
 export const metadata: Metadata = {
-	title: "portfolio",
-	description: "itzmrratsp's portfolio website",
+	title: "ItzMrRatsP – Roblox developer",
+	description: "Portfolio of itzmrratsp, a full-stack Roblox developer building games, systems and tools.",
 };
+
+// Runs before first paint so visitors never see a flash of the wrong theme.
+// Uses their saved choice, otherwise follows the system setting.
+const themeScript = `(function(){try{var t=localStorage.getItem('site-theme');if(t!=='light'&&t!=='dark'){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.setAttribute('data-theme',t)}catch(e){}})();`;
 
 export default function RootLayout({
 	children,
@@ -26,19 +34,13 @@ export default function RootLayout({
 		<html
 			lang="en"
 			suppressHydrationWarning
-			className={`${inter.variable} ${jetbrainsMono.variable}`}>
+			className={`${fraunces.variable} ${hanken.variable}`}>
 			<head>
-				{/* Restore the saved light/dark theme synchronously, before paint,
-				    so returning visitors don't see a flash of the wrong theme. */}
-				<script
-					dangerouslySetInnerHTML={{
-						__html: `(function(){try{var t=localStorage.getItem('site-theme');if(t==='light'){document.documentElement.setAttribute('data-theme','light');}}catch(e){}})();`,
-					}}
-				/>
+				<script dangerouslySetInnerHTML={{ __html: themeScript }} />
 			</head>
 			<body>
-				{/* Floating Decorations */}
 				{children}
+				<BackgroundMusic />
 			</body>
 		</html>
 	);

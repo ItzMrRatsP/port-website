@@ -1,20 +1,13 @@
 // ============================================================
 // REVIEWS — edit this file to add or remove reviews.
-// Nothing else needs to change; the Reviews section on the
-// home page reads straight from this array.
+// The "Kind words" section reads straight from this array and
+// disappears on its own if the array is empty.
 //
-// To ADD a review: copy one of the objects below, paste it
-// inside the [ ] brackets, and fill in your own values.
-// Give it a unique "id" (just bump the number).
-//
-// To REMOVE a review: delete its whole { ... } block.
-//
-// Fields:
-//   id     - unique string, e.g. "1", "2", "3"
+//   id     - unique string
 //   name   - reviewer's name or username
-//   role   - optional short label, e.g. "Client", "Student" (omit to hide)
+//   role   - optional short label, e.g. "Client" (omit to hide)
 //   rating - whole number from 1 to 5
-//   text   - the review text itself
+//   text   - the review itself
 // ============================================================
 
 export interface Review {

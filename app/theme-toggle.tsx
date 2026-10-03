@@ -2,63 +2,38 @@
 import { useEffect, useState } from "react";
 import { FaSun, FaMoon } from "react-icons/fa";
 
-export type Theme = "dark" | "light";
-
+type Theme = "light" | "dark";
 const STORAGE_KEY = "site-theme";
-const STORAGE_KEY_PREV = "site-theme-prev";
-const DEFAULT_THEME: Theme = "dark";
-
-function applyTheme(theme: Theme) {
-	// "dark" has no attribute — it's the default in globals.css — so we only
-	// ever need to set/remove data-theme="light".
-	if (theme === "light") {
-		document.documentElement.setAttribute("data-theme", "light");
-	} else {
-		document.documentElement.removeAttribute("data-theme");
-	}
-}
 
 export default function ThemeToggle() {
-	const [theme, setTheme] = useState<Theme>(DEFAULT_THEME);
+	const [theme, setTheme] = useState<Theme>("light");
 
-	// Restore whatever was saved last visit. A tiny inline script in
-	// layout.tsx already applies this before paint so there's no flash of
-	// the wrong theme — this just syncs React's state to match.
+	// The inline script in layout.tsx has already set data-theme before paint;
+	// this just syncs React's state with it.
 	useEffect(() => {
-		try {
-			const saved = localStorage.getItem(STORAGE_KEY) as Theme | null;
-			if (saved === "light" || saved === "dark") {
-				setTheme(saved);
-				applyTheme(saved);
-			}
-		} catch {
-			// localStorage unavailable (e.g. privacy mode) — fall back to default
-		}
+		setTheme(document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light");
 	}, []);
 
-	function toggleTheme() {
+	function toggle() {
 		const next: Theme = theme === "dark" ? "light" : "dark";
-
+		setTheme(next);
+		document.documentElement.setAttribute("data-theme", next);
 		try {
-			// Remember the theme we're leaving, so a visitor's last theme
-			// before this one is never lost even across reloads.
-			localStorage.setItem(STORAGE_KEY_PREV, theme);
 			localStorage.setItem(STORAGE_KEY, next);
 		} catch {
-			// ignore — the toggle still works for this session even if it can't persist
+			// storage unavailable — the theme still changes for this visit
 		}
-
-		setTheme(next);
-		applyTheme(next);
 	}
+
+	const label = theme === "dark" ? "Switch to light theme" : "Switch to dark theme";
 
 	return (
 		<button
-			className="theme-toggle"
-			onClick={toggleTheme}
-			aria-label={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
-			title={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}>
-			{theme === "dark" ? <FaSun size={16} /> : <FaMoon size={16} />}
+			className="mode-toggle"
+			onClick={toggle}
+			aria-label={label}
+			title={label}>
+			{theme === "dark" ? <FaSun size={15} /> : <FaMoon size={15} />}
 		</button>
 	);
 }

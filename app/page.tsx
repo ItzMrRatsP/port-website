@@ -1,21 +1,8 @@
-"use client";
-import { useState, useEffect, useRef } from "react";
-import {
-	FaGithub,
-	FaDiscord,
-	FaCode,
-	FaLightbulb,
-	FaHammer,
-	FaCube,
-	FaCog,
-	FaLaptopCode,
-	FaCoins,
-	FaChevronDown,
-} from "react-icons/fa";
-import CCUFrame from "./ccuFrame";
-import GameJamIcon from "./gamejam-icon";
-import ThemeToggle from "./theme-toggle";
+import CopyDiscord from "./copy-discord";
+import Plate from "./plate";
 import Reviews from "./reviews";
+import ThemeToggle from "./theme-toggle";
+import { crew, projects, studio, type Project } from "./projects-data";
 
 function RobloxIcon() {
 	return (
@@ -23,7 +10,8 @@ function RobloxIcon() {
 			width="16"
 			height="16"
 			viewBox="0 0 24 24"
-			fill="currentColor">
+			fill="currentColor"
+			aria-hidden="true">
 			<path d="M5.2 2L2 18.8 18.8 22 22 5.2 5.2 2ZM13.7 14.8L9.2 14 10 9.5l4.5.8-.8 4.5Z" />
 		</svg>
 	);
@@ -35,421 +23,338 @@ function DevMeIcon() {
 			width="16"
 			height="16"
 			viewBox="0 0 24 24"
-			fill="currentColor">
+			fill="currentColor"
+			aria-hidden="true">
 			<path d="M0 1.12L0.45 7.05L13.91 7.42L16.91 10.42L16.88 13.69L13.91 16.54L7.27 16.5L6.41 13.84L0 14.25L0.38 18.56L3.52 22.46L6.67 23.62L14.29 23.62L18.56 22.09L21.71 19.31L23.96 14.59L23.96 9.75L22.46 5.77L19.69 2.62L14.29 0.34L1.05 0.34Z" />
 		</svg>
 	);
 }
-function SectionConnector() {
+
+// Three misty ridges. The front one is filled with the page colour so the
+// hero melts into the content below it.
+function Ridges() {
 	return (
-		<div
-			className="section-connector"
+		<svg
+			className="hero-ridges"
+			viewBox="0 0 1440 400"
+			preserveAspectRatio="none"
 			aria-hidden="true">
-			<svg
-				className="section-connector-svg"
-				viewBox="0 0 120 232"
-				xmlns="http://www.w3.org/2000/svg">
-				<circle
-					className="section-connector-start"
-					cx="60"
-					cy="8"
-					r="5"
-				/>
-				<path
-					className="section-connector-path"
-					d="M60 12 C 100 44, 20 68, 60 100 C 100 132, 16 156, 56 188"
-				/>
-				<text
-					className="section-connector-x"
-					x="60"
-					y="220"
-					textAnchor="middle"
-					fontSize="28">
-					✕
-				</text>
-			</svg>
-		</div>
+			<path
+				className="ridge-back"
+				d="M0 190 C 140 140, 240 120, 380 150 S 600 210, 760 170 S 1040 90, 1200 130 S 1380 170, 1440 150 L1440 400 L0 400 Z"
+			/>
+			<path
+				className="ridge-mid"
+				d="M0 250 C 160 215, 320 200, 480 230 S 760 290, 940 245 S 1240 190, 1440 235 L1440 400 L0 400 Z"
+			/>
+			<path
+				className="ridge-front"
+				d="M0 320 C 200 290, 420 285, 640 310 S 1000 345, 1200 310 S 1380 300, 1440 310 L1440 400 L0 400 Z"
+			/>
+		</svg>
 	);
 }
 
-function Typewriter({ text, speed = 100 }: { text: string; speed?: number }) {
-	const [count, setCount] = useState(0);
-
-	useEffect(() => {
-		setCount(0);
-		const interval = setInterval(() => {
-			setCount((prev) => {
-				if (prev >= text.length) {
-					clearInterval(interval);
-					return prev;
-				}
-				return prev + 1;
-			});
-		}, speed);
-		return () => clearInterval(interval);
-	}, [text, speed]);
-
-	return <code className="terminal-tag terminal-tag--accent typewriter-cursor">{text.slice(0, count)}</code>;
+function WorkItem({ project }: { project: Project }) {
+	const label = `${project.name} on Roblox`;
+	return (
+		<article className="work">
+			<a
+				className="work-plate"
+				href={project.url}
+				target="_blank"
+				rel="noopener noreferrer"
+				tabIndex={-1}
+				aria-hidden="true">
+				<Plate motif={project.motif} />
+			</a>
+			<div className="work-text">
+				<h3>
+					<a
+						href={project.url}
+						target="_blank"
+						rel="noopener noreferrer"
+						aria-label={label}>
+						{project.name}
+					</a>
+				</h3>
+				<p>{project.blurb}</p>
+				{project.award && <p className="work-award">{project.award}</p>}
+			</div>
+		</article>
+	);
 }
 
 export default function Home() {
-	const mainRef = useRef<HTMLElement>(null);
-
-	useEffect(() => {
-		const mainEl = mainRef.current;
-		if (!mainEl) return;
-
-		const handleScroll = () => {
-			const parallaxFactor = 0.35;
-			const offset = mainEl.scrollTop * parallaxFactor;
-			document.body.style.setProperty("--bg-y", `${offset}px`);
-		};
-
-		mainEl.addEventListener("scroll", handleScroll, { passive: true });
-		return () => mainEl.removeEventListener("scroll", handleScroll);
-	}, []);
-
-	const scrollToSection = (id: string) => (e: React.MouseEvent) => {
-		e.preventDefault();
-		document.getElementById(id)?.scrollIntoView({
-			behavior: "smooth",
-			block: "start",
-		});
-	};
-
-	const [copied, setCopied] = useState(false);
-
-	async function copyDiscord() {
-		await navigator.clipboard.writeText("itzmrratsp");
-		setCopied(true);
-		setTimeout(() => setCopied(false), 2000);
-	}
+	// Two staggered columns, like pictures hung at different heights.
+	const colA = projects.filter((_, i) => i % 2 === 0);
+	const colB = projects.filter((_, i) => i % 2 === 1);
 
 	return (
-		<main ref={mainRef}>
-			<header className="site-header">
-				<nav>
-					<ul>
-						<li>
-							<a
-								href="#home"
-								onClick={scrollToSection("home")}>
-								<span className="nav-prompt">ls ~/</span> HOME
-							</a>
-						</li>
-						<li>
-							<a
-								href="#projects"
-								onClick={scrollToSection("projects")}>
-								<span className="nav-prompt">ls ~/</span> PROJECTS
-							</a>
-						</li>
-						<li>
-							<a
-								href="#plans"
-								onClick={scrollToSection("plans")}>
-								<span className="nav-prompt">ls ~/</span> PLANS
-							</a>
-						</li>
-						{/* <li>
-							<a
-								href="#stats-jams"
-								onClick={(e) => {
-									e.preventDefault();
-									document
-										.getElementById("stats-jams")
-										?.scrollIntoView({ behavior: "smooth", block: "start" });
-								}}>
-								<span className="nav-prompt">~/</span> STATS & JAMS
-							</a>
-						</li> */}
-					</ul>
+		<>
+			<header className="top-bar">
+				<a
+					className="brand"
+					href="#top">
+					itzmrratsp
+				</a>
+				<nav
+					className="site-nav"
+					aria-label="Main">
+					<a href="#work">Work</a>
+					<a href="#services">Services</a>
+					<a href="#contact">Contact</a>
+					<ThemeToggle />
 				</nav>
-				<ThemeToggle />
 			</header>
 
-			<section
-				id="home"
-				className="hero">
-				<div className="hero-content">
-					<div className="hero-top">
-						<code className="terminal-tag terminal-tag--dim">cat ~/whoami.json</code>
-						{/* <div className="terminal-frame">
-							<code className="terminal-tag terminal-tag--dim">~/</code>
-							<Typewriter
-								text="ItzMrRatsP"
-								speed={100}
-
-							/>
-						</div> */}
-						<div className="image-frame">
-							<img
-								src="/light-art.png"
-								alt="Profile"
-								className="art-light"
-							/>
-						</div>
-					</div>
-
-					{/* <div className="hero-info"> */}
-					{/* <code className="terminal-tag terminal-tag--small">20 years old</code> */}
-					{/* <code className="terminal-tag terminal-tag--small">experienced in luau</code> */}
-					{/* <code className="terminal-tag terminal-tag--small"></code> */}
-					{/* <code className="terminal-tag terminal-tag--small">I love her 💖</code> */}
-					{/* </div> */}
-
-					<p className="hero-description">
-						Full-stack Roblox developer building games, systems, and everything in between - mentored by{" "}
-						<a
-							href="https://dylwithlt.github.io/"
-							target="_blank"
-							rel="noopener noreferrer"
-							className="hero-description-link">
-							DylWithIt
-						</a>
-						. I've spent the last couple years building on Roblox, from gameplay systems to full game loops.
-						I care about clean code, fast iteration, and turning weird ideas into something people can
-						actually play. Outside of scripting I'm usually learning something new or helping other devs get
-						unstuck.
-					</p>
-
-					<div className="hero-buttons">
-						<button
-							className="terminal-button"
-							onClick={copyDiscord}>
-							<FaDiscord size={16} />
-							{copied ? "Copied!" : "Discord"}
-						</button>
-						<a
-							className="terminal-button terminal-button--outline"
-							href="https://devme.app/@itzmrratsp"
-							target="_blank"
-							rel="noopener noreferrer">
-							<DevMeIcon /> DevMe
-						</a>
-						<a
-							className="terminal-button terminal-button--outline"
-							href="https://roblox.com/users/2536605621/profile"
-							target="_blank"
-							rel="noopener noreferrer">
-							<RobloxIcon /> Roblox
-						</a>
-					</div>
-
-					<a
-						href="#plans"
-						onClick={scrollToSection("plans")}
-						className="hero-cta-banner">
-						<span>Want to work together?</span>
-						<span className="hero-cta-banner-link">
-							View Plans <span className="hero-cta-banner-arrow">→</span>
-						</span>
-					</a>
-				</div>
-
-				{/* <a
-					href="#projects"
-					onClick={scrollToSection("projects")}
-					className="scroll-cue"
-					aria-label="Scroll to projects">
-					<FaChevronDown size={14} />
-				</a> */}
-			</section>
-
-			{/* PROJECTS SECTION */}
-			<section
-				id="projects"
-				className="hero hero--compact">
-				<div className="hero-content">
-					<div className="plans-heading">
-						<code className="terminal-tag terminal-tag--dim">cat ~/projects.json</code>
-						<h2>Selected Work</h2>
-						<p>A few things I've built or contributed to on Roblox - click through to check them out.</p>
-					</div>
-
-					<div className="project-list">
-						<a
-							href="https://www.roblox.com/games/88481183745824/3M1"
-							target="_blank"
-							rel="noopener noreferrer"
-							className="project-row">
-							<div className="project-row-info">
-								<code className="project-row-name">3M1</code>
-								<code className="project-row-desc">
-									Systems-driven escape game built for RDC 2025 — 1st place.
-								</code>
-							</div>
-							<span className="project-row-arrow">↗</span>
-						</a>
-
-						<a
-							href="https://www.roblox.com/games/125078909503397/1-Slide-Height-for-Dumplings"
-							target="_blank"
-							rel="noopener noreferrer"
-							className="project-row">
-							<div className="project-row-info">
-								<code className="project-row-name">+1 Slide Height for Dumplings</code>
-								<code className="project-row-desc">
-									Fully functional game based on squishy trend, built for a commissioner.
-								</code>
-							</div>
-							<span className="project-row-arrow">↗</span>
-						</a>
-
-						<a
-							href="https://www.roblox.com/games/18892236729/MALICE"
-							target="_blank"
-							rel="noopener noreferrer"
-							className="project-row">
-							<div className="project-row-info">
-								<code className="project-row-name">Malice</code>
-								<code className="project-row-desc">
-									Time-based scoring game built for Inspire 2024 — 2nd place.
-								</code>
-							</div>
-							<span className="project-row-arrow">↗</span>
-						</a>
-
-						<a
-							href="https://www.roblox.com/games/132813250731469"
-							target="_blank"
-							rel="noopener noreferrer"
-							className="project-row">
-							<div className="project-row-info">
-								<code className="project-row-name">The Hybrid Cafe</code>
-								<code className="project-row-desc">
-									A cozy cafe roleplay experience with custom systems.
-								</code>
-							</div>
-							<span className="project-row-arrow">↗</span>
-						</a>
-
-						<a
-							href="https://www.roblox.com/games/125700405216363"
-							target="_blank"
-							rel="noopener noreferrer"
-							className="project-row">
-							<div className="project-row-info">
-								<code className="project-row-name">Camo Or Snipe!</code>
-								<code className="project-row-desc">A fast-paced hide-and-seek style shooter.</code>
-							</div>
-							<span className="project-row-arrow">↗</span>
-						</a>
-					</div>
-				</div>
-			</section>
-
-			<section
-				id="payment"
-				className="hero hero--compact">
-				<div
-					id="plans"
-					className="plans-wrap">
-					<div className="plans-heading">
-						<code className="terminal-tag terminal-tag--dim">cat ~/plans.json</code>
-						<h2>Work with me</h2>
-						<p>
-							Two ways to get help - pick whichever fits what you need, then hit me up on Discord to lock
-							in details.
+			<main id="top">
+				{/* HERO */}
+				<section
+					className="landing"
+					aria-labelledby="hero-title">
+					<div
+						className="hero-stars"
+						aria-hidden="true"
+					/>
+					<div
+						className="hero-sun"
+						aria-hidden="true"
+					/>
+					<Ridges />
+					<div className="wrap hero-inner">
+						<h1 id="hero-title">I build the quiet systems that hold Roblox games together.</h1>
+						<p className="hero-sub">
+							Hi, I’m ItzMrRatsP, a full-stack Roblox developer. Gameplay, tools and interfaces: the parts
+							players feel but rarely notice.
 						</p>
+						<div className="hero-actions">
+							<CopyDiscord />
+							<a
+								className="link"
+								href="#work">
+								See my work
+							</a>
+						</div>
 					</div>
+				</section>
 
-					{/* <div className="plans-status">
-						<span className="plans-status-dot" />
-						<span className="plans-status-text">Available for new projects</span>
-						<span className="plans-status-sep">•</span>
-						<span className="plans-status-sub">Usually responds within a few hours</span>
-					</div> */}
+				{/* ABOUT */}
+				<section
+					className="section"
+					aria-labelledby="about-title">
+					<div className="wrap about">
+						<h2
+							className="about-lead"
+							id="about-title">
+							Full-stack Roblox developer building games, systems and everything in between.
+						</h2>
+						<div>
+							<p className="about-body">
+								I’ve spent the last couple of years building on Roblox, from small gameplay systems to
+								full game loops. I care about clean code, quick iteration, and turning odd ideas into
+								something people can actually play.
+							</p>
+							<p className="about-body">
+								Away from the script editor I’m usually learning something new or helping another
+								developer get unstuck. I’m mentored by{" "}
+								<a
+									className="link"
+									href="https://dylwithlt.github.io/"
+									target="_blank"
+									rel="noopener noreferrer">
+									DylWithIt
+								</a>
+								.
+							</p>
+						</div>
+					</div>
+				</section>
 
-					<div className="plans-grid">
-						<div className="plan-card plan-card--featured">
-							<span className="plan-card-badge">Most booked</span>
-							<div className="plan-card-top">
-								<div className="plan-card-heading">
-									<span className="plan-card-icon">
-										<FaLaptopCode size={16} />
-									</span>
-									<div>
-										<div className="plan-card-title">Long Term</div>
-										<div className="plan-card-tagline">ongoing hourly development</div>
-									</div>
-								</div>
-								<li>
-									<div className="plan-card-price">
-										<strong>$20</strong>
-										<span>/hr</span>
-									</div>
-									<div className="plan-card-price--gold">
-										<strong>5K Robux</strong>
-										<span> /hr</span>
-									</div>
-								</li>
+				{/* WORK */}
+				<section
+					className="section"
+					id="work"
+					aria-labelledby="work-title">
+					<div className="wrap">
+						<div className="work-head">
+							<h2 id="work-title">Selected work</h2>
+							<p className="section-lede">
+								A few games I’ve built or helped build. Pick one to open it on Roblox.
+							</p>
+						</div>
+
+						<div className="work-list">
+							{projects.map((p) => (
+								<WorkItem
+									key={p.id}
+									project={p}
+								/>
+							))}
+						</div>
+
+						<div className="work-grid">
+							<div className="work-col">
+								{colA.map((p) => (
+									<WorkItem
+										key={p.id}
+										project={p}
+									/>
+								))}
 							</div>
-							<ul className="plan-card-features">
-								<li>Systems, mechanics & gameplay scripting</li>
-								<li>Tooling, optimization & bug fixes</li>
-								<li>Full projects or drop-in collab work</li>
-								<li>Regular progress updates as we go</li>
+							<div className="work-col">
+								{colB.map((p) => (
+									<WorkItem
+										key={p.id}
+										project={p}
+									/>
+								))}
+							</div>
+						</div>
+
+						<div className="crew">
+							<div>
+								<h3>The jam crew</h3>
+								<p>
+									3M1 and Malice were made with{" "}
+									<a
+										className="link"
+										href={studio.url}
+										target="_blank"
+										rel="noopener noreferrer">
+										{studio.name}
+									</a>
+									.
+								</p>
+							</div>
+							<ul className="crew-list">
+								{crew.map((m) => (
+									<li key={m.name}>
+										<a
+											className="link"
+											href={m.url}
+											target="_blank"
+											rel="noopener noreferrer">
+											{m.name}
+										</a>
+										<span className="crew-role">{m.role}</span>
+									</li>
+								))}
 							</ul>
 						</div>
+					</div>
+				</section>
 
-						<div className="plan-card">
-							<div className="plan-card-top">
-								<div className="plan-card-heading">
-									<span className="plan-card-icon">
-										<FaHammer size={16} />
-									</span>
-									<div>
-										<div className="plan-card-title">Short Term</div>
-										<div className="plan-card-tagline">commission-based / single systems</div>
-									</div>
-								</div>
-								<li>
-									<div className="plan-card-price">
-										<strong>$40</strong>
-										<span>min</span>
-									</div>
-									<div className="plan-card-price--gold">
-										<strong>10K Robux</strong>
-										<span> min</span>
-									</div>
+				{/* SERVICES */}
+				<section
+					className="section services"
+					id="services"
+					aria-labelledby="services-title">
+					<div className="wrap">
+						<h2 id="services-title">Working together</h2>
+						<p className="section-lede">
+							Two ways to get help. Pick the one that fits, then message me on Discord and we’ll sort out
+							the details.
+						</p>
+
+						<div className="plans">
+							<article className="plan">
+								<span className="plan-flag">Most booked</span>
+								<h3>Long term</h3>
+								<p className="plan-tag">Ongoing hourly development</p>
+								<p className="plan-price">
+									<span className="plan-amount">$20</span>
+									<span className="plan-unit">per hour</span>
+								</p>
+								<p className="plan-alt">or 5K Robux per hour</p>
+								<ul className="plan-features">
+									<li>Systems, mechanics and gameplay scripting</li>
+									<li>Tooling, optimization and bug fixes</li>
+									<li>Full projects or drop-in collab work</li>
+									<li>Regular progress updates as we go</li>
+								</ul>
+							</article>
+
+							<article className="plan">
+								<h3>Short term</h3>
+								<p className="plan-tag">Commissions and single systems</p>
+								<p className="plan-price">
+									<span className="plan-amount">$40</span>
+									<span className="plan-unit">minimum</span>
+								</p>
+								<p className="plan-alt">or 10K Robux minimum</p>
+								<ul className="plan-features">
+									<li>One-off systems: shops, inventories, admin panels</li>
+									<li>Fixed price, scoped before we start</li>
+									<li>A good fit for a single feature or fix</li>
+									<li>Delivered complete, ready to drop in</li>
+								</ul>
+							</article>
+						</div>
+
+						<div className="process">
+							<h3>How it works</h3>
+							<ol className="steps">
+								<li className="step">
+									<span className="step-num">1</span>
+									<h4>Reach out</h4>
+									<p>Message me on Discord with what you need.</p>
 								</li>
-							</div>
-							<ul className="plan-card-features">
-								<li>One-off systems - shops, inventories, admin panels</li>
-								<li>Fixed price, scoped before we start</li>
-								<li>Good fit for a single feature or fix</li>
-								<li>Delivered complete, ready to drop in</li>
-							</ul>
+								<li className="step">
+									<span className="step-num">2</span>
+									<h4>Get a quote</h4>
+									<p>I scope the work and give you a price.</p>
+								</li>
+								<li className="step">
+									<span className="step-num">3</span>
+									<h4>I build</h4>
+									<p>You get regular updates as things take shape.</p>
+								</li>
+								<li className="step">
+									<span className="step-num">4</span>
+									<h4>Handoff</h4>
+									<p>Final delivery, plus any revisions.</p>
+								</li>
+							</ol>
 						</div>
 					</div>
+				</section>
 
-					<div className="process-strip">
-						<div className="process-step">
-							<span className="process-step-num">01</span>
-							<div className="process-step-title">Reach out</div>
-							<p className="process-step-desc">Message me on Discord with what you need</p>
-						</div>
-						<div className="process-step">
-							<span className="process-step-num">02</span>
-							<div className="process-step-title">Get a quote</div>
-							<p className="process-step-desc">I'll scope the work and give you a price</p>
-						</div>
-						<div className="process-step">
-							<span className="process-step-num">03</span>
-							<div className="process-step-title">I get to work</div>
-							<p className="process-step-desc">Regular updates as progress happens</p>
-						</div>
-						<div className="process-step">
-							<span className="process-step-num">04</span>
-							<div className="process-step-title">Delivery</div>
-							<p className="process-step-desc">Final handoff plus any revisions</p>
+				{/* <Reviews /> */}
+
+				{/* CONTACT */}
+				<section
+					className="section contact"
+					id="contact"
+					aria-labelledby="contact-title">
+					<div className="wrap">
+						<h2 id="contact-title">Have something in mind?</h2>
+						<p>
+							Discord is the quickest way to reach me. Tell me what you’re building and we’ll go from
+							there.
+						</p>
+						<div className="contact-actions">
+							<CopyDiscord />
+							<a
+								className="button button--ghost"
+								href="https://devme.app/@itzmrratsp"
+								target="_blank"
+								rel="noopener noreferrer">
+								<DevMeIcon /> DevMe
+							</a>
+							<a
+								className="button button--ghost"
+								href="https://roblox.com/users/2536605621/profile"
+								target="_blank"
+								rel="noopener noreferrer">
+								<RobloxIcon /> Roblox
+							</a>
 						</div>
 					</div>
-				</div>
-			</section>
+				</section>
+			</main>
 
-			{/* NEW SPLIT SECTION */}
-		</main>
+			<footer className="site-footer">© {new Date().getFullYear()} itzmrratsp</footer>
+		</>
 	);
 }
