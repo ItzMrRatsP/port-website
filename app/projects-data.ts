@@ -1,25 +1,39 @@
 // ============================================================
-// PROJECTS & TEAM — edit this file to change the Work section.
+// PROJECTS — edit this file to change the Work section.
 //
-// Each project gets a small illustrated "plate" instead of a
-// screenshot, chosen with `motif`:
-//   "door"     – an open doorway with scattered fragments
-//   "clock"    – a ring clock
-//   "dumpling" – a dumpling on a plate
-//   "cafe"     – a cup with steam
-//   "foliage"  – leaves with a scope ring
+// Each project is shown as a row in the list plus a big stage.
+// The stage shows the game's real thumbnail and icon from
+// roblox-stats.json (with skeleton loaders until they arrive).
 //
-// `award` is optional. Remove it and the line simply disappears.
+// Optional fields: `award`, `role`, `team`. Remove one and that
+// line simply disappears.
 // ============================================================
 
+// Pulls the Roblox place id out of a game url, e.g. ".../games/12345/Name" -> "12345".
+// The showcase uses it to look the game up in roblox-stats.json.
+export function placeIdOf(url: string): string {
+	return url.match(/games\/(\d+)/)?.[1] ?? "";
+}
+
+// Only used by the old illustrated scenes (scenes.tsx / plate.tsx), which the
+// showcase no longer renders. Safe to keep or delete along with those files.
 export type Motif = "door" | "clock" | "dumpling" | "cafe" | "foliage";
+
+export interface Award {
+	place: string; // e.g. "1st"
+	event: string; // e.g. "RDC 2025"
+}
 
 export interface Project {
 	id: string;
 	name: string;
 	url: string;
 	blurb: string;
-	award?: string;
+	meta: string; // short line under the title in the list
+	tags: string[];
+	award?: Award; // shown as a small pill under the game name
+	role?: string;
+	team?: boolean; // adds "Made with Gearworks Studios"
 	motif: Motif;
 }
 
@@ -29,7 +43,11 @@ export const projects: Project[] = [
 		name: "3M1",
 		url: "https://www.roblox.com/games/88481183745824/3M1",
 		blurb: "A systems-driven escape game built around the jam theme Break the System.",
-		award: "1st place, RDC 2025",
+		meta: "RDC 2025",
+		tags: ["Game jam", "Escape game", "Systems", "UI"],
+		award: { place: "1st", event: "RDC 2025" },
+		role: "Programmer, UI",
+		team: true,
 		motif: "door",
 	},
 	{
@@ -37,28 +55,40 @@ export const projects: Project[] = [
 		name: "Malice",
 		url: "https://www.roblox.com/games/18892236729/MALICE",
 		blurb: "A time-based scoring game built around the jam theme Time Is Your Enemy.",
-		award: "2nd place, Inspire 2024",
+		meta: "Inspire 2024",
+		tags: ["Game jam", "Time-based", "Scoring"],
+		award: { place: "2nd", event: "Inspire 2024" },
+		role: "Programmer, UI",
+		team: true,
 		motif: "clock",
 	},
-	{
-		id: "dumplings",
-		name: "+1 Slide Height for Dumplings",
-		url: "https://www.roblox.com/games/125078909503397/1-Slide-Height-for-Dumplings",
-		blurb: "A fully working game based on the squishy trend, built for a commissioner.",
-		motif: "dumpling",
-	},
+	// {
+	// 	id: "dumplings",
+	// 	name: "+1 Slide Height for Dumplings",
+	// 	url: "https://www.roblox.com/games/125078909503397/1-Slide-Height-for-Dumplings",
+	// 	blurb: "A fully working game based on the squishy trend, built for a commissioner.",
+	// 	meta: "Commission",
+	// 	tags: ["Commission", "Full game"],
+	// 	motif: "dumpling",
+	// },
 	{
 		id: "hybrid-cafe",
 		name: "The Hybrid Cafe",
 		url: "https://www.roblox.com/games/132813250731469",
-		blurb: "A cozy cafe roleplay experience with custom systems.",
+		blurb: "A story-driven horror game set in a maid cafe, with custom systems.",
+		meta: "Story",
+        role: "Current Developer",
+		tags: ["Story", "Horror", "Maid Cafe"],
 		motif: "cafe",
 	},
 	{
 		id: "camo-or-snipe",
 		name: "Camo Or Snipe!",
 		url: "https://www.roblox.com/games/125700405216363",
-		blurb: "A fast-paced, hide-and-seek style shooter.",
+		blurb: "A hide-and-seek game built around camouflage.",
+		meta: "Hide and seek",
+        role: "Gameplay Programmer (Short-Term)",
+		tags: ["Hide and seek", "Camo"],
 		motif: "foliage",
 	},
 ];
@@ -68,6 +98,7 @@ export const studio = {
 	url: "https://www.roblox.com/communities/34692920/Gearworks-Studios#!/about",
 };
 
+// Kept for later in case you want the team list back on the page.
 export const crew = [
 	{ name: "ItzMrRatsP", role: "Programmer, UI", url: "https://www.roblox.com/users/2536605621/profile" },
 	{

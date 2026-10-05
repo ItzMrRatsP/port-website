@@ -2,7 +2,15 @@
 import { useState } from "react";
 import { FaDiscord } from "react-icons/fa";
 
-export default function CopyDiscord({ username = "itzmrratsp" }: { username?: string }) {
+export default function CopyDiscord({
+	username = "itzmrratsp",
+	label = "Copy Discord username",
+	className = "button button--solid",
+}: {
+	username?: string;
+	label?: string;
+	className?: string;
+}) {
 	const [copied, setCopied] = useState(false);
 
 	async function copy() {
@@ -18,10 +26,10 @@ export default function CopyDiscord({ username = "itzmrratsp" }: { username?: st
 
 	return (
 		<button
-			className="button button--solid"
+			className={className}
 			onClick={copy}>
 			<FaDiscord size={16} />
-			<span aria-live="polite">{copied ? `Copied ${username}` : "Copy Discord username"}</span>
+			<span aria-live="polite">{copied ? `Copied ${username}` : label}</span>
 		</button>
 	);
 }

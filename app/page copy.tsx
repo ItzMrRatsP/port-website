@@ -160,24 +160,9 @@ export default function Home() {
 						</p>
 						<div className="hero-actions">
 							<a
-								className="button button--hero"
+								className="button button--solid"
 								href="#services">
 								Hire me
-								<span
-									className="button-arrow"
-									aria-hidden="true">
-									<svg
-										width="16"
-										height="16"
-										viewBox="0 0 24 24"
-										fill="none"
-										stroke="currentColor"
-										strokeWidth="2.5"
-										strokeLinecap="round"
-										strokeLinejoin="round">
-										<path d="M12 5v14M5 12l7 7 7-7" />
-									</svg>
-								</span>
 							</a>
 							<a
 								className="link"

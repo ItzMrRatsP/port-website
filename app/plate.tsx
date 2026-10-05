@@ -3,11 +3,11 @@ import type { Motif } from "./projects-data";
 
 // Muted top/bottom colours for each plate. Tweak freely.
 const TONES: Record<Motif, [string, string]> = {
-	door: ["#bdb9db", "#e4dae8"],
-	clock: ["#97aebf", "#cad8df"],
-	dumpling: ["#f0d5b6", "#f7ebda"],
-	cafe: ["#e3ce9c", "#f2e9cf"],
-	foliage: ["#9fbba6", "#d2e0d0"],
+	door: ["#cbbfd6", "#eee3ea"],
+	clock: ["#aaa8ba", "#dad6de"],
+	dumpling: ["#f1d3b8", "#f8ebe0"],
+	cafe: ["#efd9a0", "#f7eed2"],
+	foliage: ["#b4c2a5", "#dfe6d3"],
 };
 
 function Door() {

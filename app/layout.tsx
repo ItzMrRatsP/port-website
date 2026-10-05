@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
-import { Fraunces, Hanken_Grotesk } from "next/font/google";
-import BackgroundMusic from "./background-music";
+import { Bricolage_Grotesque, Hanken_Grotesk } from "next/font/google";
 import "./globals.css";
 
-// A soft, slightly rounded serif for headings, and a quiet grotesk for text.
-const fraunces = Fraunces({
+// A quirky, characterful grotesque for headings, and a quiet grotesk for text.
+// Bricolage Grotesque has an optical-size axis, so big headings get tighter,
+// punchier letterforms automatically.
+const display = Bricolage_Grotesque({
 	subsets: ["latin"],
 	variable: "--font-display",
-	axes: ["SOFT", "opsz"],
-	style: ["normal", "italic"],
+	axes: ["opsz"],
 });
 
 const hanken = Hanken_Grotesk({
@@ -17,7 +17,7 @@ const hanken = Hanken_Grotesk({
 });
 
 export const metadata: Metadata = {
-	title: "ItzMrRatsP – Roblox developer",
+	title: "ItzMrRatsP Portfolio",
 	description: "Portfolio of itzmrratsp, a full-stack Roblox developer building games, systems and tools.",
 };
 
@@ -34,14 +34,11 @@ export default function RootLayout({
 		<html
 			lang="en"
 			suppressHydrationWarning
-			className={`${fraunces.variable} ${hanken.variable}`}>
+			className={`${display.variable} ${hanken.variable}`}>
 			<head>
 				<script dangerouslySetInnerHTML={{ __html: themeScript }} />
 			</head>
-			<body>
-				{children}
-				<BackgroundMusic />
-			</body>
+			<body>{children}</body>
 		</html>
 	);
 }
