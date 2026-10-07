@@ -1437,3 +1437,157 @@ html body h1 {
 		transform: none;
 	}
 }
+
+/* ---------- companies ---------- */
+
+.companies {
+	padding-top: 0;
+}
+
+.company-grid {
+	list-style: none;
+	margin: 40px 0 0;
+	padding: 0;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+	gap: 20px;
+}
+
+.company-card,
+.company-card * {
+	text-decoration: none;
+}
+
+.company-card {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	height: 100%;
+	min-height: 230px;
+	padding: 26px;
+	overflow: hidden;
+	border: 1px solid var(--line);
+	border-radius: 28px;
+	background: var(--bg);
+	transition:
+		transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1),
+		border-color 0.3s ease,
+		box-shadow 0.3s ease,
+		background-color 0.5s ease;
+}
+
+/* soft glow in the corner that brightens on hover */
+.company-card::before {
+	content: "";
+	position: absolute;
+	top: -80px;
+	right: -80px;
+	width: 220px;
+	height: 220px;
+	border-radius: 50%;
+	background: radial-gradient(circle, var(--accent-soft), transparent 70%);
+	opacity: 0.7;
+	transition:
+		opacity 0.35s ease,
+		transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+	pointer-events: none;
+}
+
+.company-card:hover {
+	transform: translateY(-5px);
+	border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+	box-shadow: 0 18px 40px -22px color-mix(in srgb, var(--accent) 55%, transparent);
+}
+
+.company-card:hover::before {
+	opacity: 1;
+	transform: scale(1.25);
+}
+
+.company-arrow {
+	position: absolute;
+	top: 22px;
+	right: 22px;
+	display: grid;
+	place-items: center;
+	width: 34px;
+	height: 34px;
+	border: 1px solid var(--line);
+	border-radius: 50%;
+	font-size: 0.95rem;
+	color: var(--ink-2);
+	transition:
+		background-color 0.25s ease,
+		color 0.25s ease,
+		transform 0.25s ease,
+		border-color 0.25s ease;
+}
+
+.company-card:hover .company-arrow {
+	background: var(--accent);
+	border-color: var(--accent);
+	color: var(--accent-ink);
+	transform: rotate(45deg);
+}
+
+.company-name {
+	position: relative;
+	padding-right: 44px;
+	font-family: var(--font-serif);
+	font-size: clamp(1.3rem, 2.2vw, 1.6rem);
+	line-height: 1.15;
+}
+
+.company-desc {
+	position: relative;
+	color: var(--ink-2);
+	font-size: 0.95rem;
+	line-height: 1.55;
+}
+
+.company-role {
+	position: relative;
+	align-self: flex-start;
+	font-size: 0.8rem;
+	padding: 3px 10px;
+	border-radius: 999px;
+	background: var(--accent-soft);
+	color: var(--accent);
+}
+
+.company-foot {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	margin-top: auto;
+	padding-top: 16px;
+	border-top: 1px dashed var(--line);
+	font-size: 0.9rem;
+}
+
+.company-now {
+	padding: 4px 11px;
+	border-radius: 999px;
+	background: var(--accent-soft);
+	border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+	font-size: 0.68rem;
+	font-weight: 700;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: var(--accent);
+}
+
+.company-years {
+	color: var(--ink-2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.company-card,
+	.company-card::before,
+	.company-arrow {
+		transition: none;
+	}
+}

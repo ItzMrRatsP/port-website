@@ -1,7 +1,7 @@
 import CopyDiscord from "./copy-discord";
 import Rat from "./rat";
 import ThemeToggle from "./theme-toggle";
-import { projects } from "./projects-data";
+import { companies, projects } from "./projects-data";
 import WorkShowcase from "./work-showcase";
 
 function RobloxIcon() {
@@ -234,6 +234,46 @@ export default function Home() {
 						</div>
 
 						<WorkShowcase projects={projects} />
+					</div>
+				</section>
+
+				{/* COMPANIES */}
+				<section
+					className="section companies"
+					aria-labelledby="companies-title">
+					<div className="wrap">
+						<h2 id="companies-title">Where I’ve worked</h2>
+						<p className="section-lede">Studios and teams I’ve built with.</p>
+
+						<ul className="company-grid">
+							{companies.map((c) => {
+								const current = /present/i.test(c.years);
+								return (
+									<li key={c.name}>
+										<a
+											className="company-card"
+											href={c.url}
+											target="_blank"
+											rel="noopener noreferrer">
+											<span
+												className="company-arrow"
+												aria-hidden="true">
+												↗
+											</span>
+											<span className="company-name">{c.name}</span>
+											{c.role && <span className="company-role">{c.role}</span>}
+											<span className="company-desc">{c.description}</span>
+											<span className="company-foot">
+												<span className="company-years">{c.years}</span>
+												{current && (
+													<span className="company-now">Ongoing</span>
+												)}
+											</span>
+										</a>
+									</li>
+								);
+							})}
+						</ul>
 					</div>
 				</section>
 

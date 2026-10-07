@@ -109,3 +109,34 @@ export const crew = [
 	{ name: "Boneblox", role: "Builder, lead story writer", url: "https://www.roblox.com/users/87768826" },
 	{ name: "Stefano_css", role: "Modeler", url: "https://www.roblox.com/users/4998832582/profile" },
 ];
+
+export interface Company {
+	name: string;
+	url: string;
+	years: string;
+	description: string;
+	role?: string; // optional small tag under the name
+}
+
+// Companies and studios I've worked for. Edit this list to change the section.
+export const companies: Company[] = [
+	{
+		name: "Increates",
+		url: "https://increates.com",
+		years: "2025 – Present",
+		description:
+			"A full-stack Roblox studio that acquires, develops and grows high-potential games with dedicated in-house teams.",
+	},
+	{
+		name: "Rumble Party",
+		url: "https://rumble.party/",
+		years: "2026 – Present",
+		description: "An 8-player party game collection packed with chaotic challenges, from fast races to puzzle games.",
+	},
+	{
+		name: "Sam's Development Studio",
+		url: "https://www.samsdevstudio.com/",
+		years: "2025",
+		description: "Worked on Artifact with the studio.",
+	},
+];
