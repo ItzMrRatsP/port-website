@@ -3,6 +3,7 @@ import Rat from "./rat";
 import ThemeToggle from "./theme-toggle";
 import { companies, projects } from "./projects-data";
 import WorkShowcase from "./work-showcase";
+import { FaDiscord } from "react-icons/fa";
 
 function RobloxIcon() {
 	return (
@@ -265,9 +266,7 @@ export default function Home() {
 											<span className="company-desc">{c.description}</span>
 											<span className="company-foot">
 												<span className="company-years">{c.years}</span>
-												{current && (
-													<span className="company-now">Ongoing</span>
-												)}
+												{current && <span className="company-now">Ongoing</span>}
 											</span>
 										</a>
 									</li>
@@ -365,6 +364,12 @@ export default function Home() {
 						</p>
 						<div className="contact-actions">
 							<CopyDiscord />
+							<a
+								className="button button--ghost"
+								href="https://discord.gg/2yKqAVQUWY"
+								rel="noopener noreferrer">
+								<FaDiscord size={16} /> Join Discord
+							</a>
 							<a
 								className="button button--ghost"
 								href="https://devme.app/@itzmrratsp"

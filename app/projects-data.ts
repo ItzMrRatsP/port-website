@@ -127,6 +127,12 @@ export const companies: Company[] = [
 		description:
 			"A full-stack Roblox studio that acquires, develops and grows high-potential games with dedicated in-house teams.",
 	},
+    {
+        name: "Flux",
+        url: "https://flux.kohl.gg/",
+        years: "2026 - Present",
+        description: "Contributing to Flux, a modern UI library focused on building polished, intuitive, and high-quality interfaces."
+    },
 	{
 		name: "Rumble Party",
 		url: "https://rumble.party/",
