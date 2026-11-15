@@ -27,6 +27,7 @@
 	--star-opacity: 0;
 
 	--cheese: #e0a93b;
+	--closed: #b7615f;
 	--rat: #5f5565;
 	--rat-eye: #f4efe8;
 	--rat-pink: #e3a9b2;
@@ -142,7 +143,6 @@ img {
 	outline: 2px solid var(--accent);
 	outline-offset: 3px;
 }
-
 
 /* ---------- guard rails ----------
    If an older stylesheet is still loaded, these win regardless of order
@@ -838,7 +838,6 @@ html body h1 {
 	object-fit: cover;
 }
 
-
 /* Footer under the thumbnail. The icon is pulled up so it hangs over the
    thumbnail's bottom-left corner. */
 .stage-foot {
@@ -1029,10 +1028,20 @@ html body h1 {
 	border-color: var(--cheese);
 }
 
-.plan-flag {
+.plan-flags {
 	position: absolute;
 	top: -14px;
 	left: clamp(26px, 3.4vw, 40px);
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap; /* wraps on narrow screens instead of overflowing */
+	gap: 8px;
+	margin: 0;
+	padding: 0;
+	list-style: none; /* removes bullets */
+}
+
+.plan-flag {
 	padding: 4px 14px;
 	border-radius: 999px;
 	background: var(--cheese);
@@ -1040,8 +1049,14 @@ html body h1 {
 	font-size: 0.8rem;
 	font-weight: 700;
 	letter-spacing: 0.02em;
+	white-space: nowrap;
 }
 
+/* Only needed if the closed variant should look different */
+.plan-flag--closed {
+	background: var(--closed);
+	/* e.g. background: var(--something-else); */
+}
 .plan-tag {
 	margin-top: 6px;
 	font-family: var(--font-serif);

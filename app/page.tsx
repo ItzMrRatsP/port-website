@@ -290,7 +290,10 @@ export default function Home() {
 
 						<div className="plans">
 							<article className="plan plan--featured">
-								<span className="plan-flag">Most booked</span>
+								<ul className="plan-flags">
+									<li className="plan-flag">Most booked</li>
+									<li className="plan-flag plan-flag--closed">Closed</li>
+								</ul>
 								<h3>Long term</h3>
 								<p className="plan-tag">Ongoing hourly development</p>
 								<p className="plan-price">
