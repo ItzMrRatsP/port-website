@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import { Pixelify_Sans, IBM_Plex_Mono } from "next/font/google";
+import { Schibsted_Grotesk, Instrument_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-const display = Pixelify_Sans({ subsets: ["latin"], variable: "--font-display" });
-const body = IBM_Plex_Mono({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--font-body" });
+const display = Schibsted_Grotesk({ subsets: ["latin"], variable: "--font-display" });
+const body = Instrument_Sans({ subsets: ["latin"], variable: "--font-body" });
+const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-code" });
 
 export const metadata: Metadata = {
 	title: "ItzMrRatsP | Roblox Scripting Commissions",
@@ -16,7 +17,7 @@ const themeScript = `(function(){try{var t=localStorage.getItem('site-theme');if
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
 	return (
-		<html lang="en" suppressHydrationWarning className={`${display.variable} ${body.variable}`}>
+		<html lang="en" suppressHydrationWarning className={`${display.variable} ${body.variable} ${mono.variable}`}>
 			<head>
 				<script dangerouslySetInnerHTML={{ __html: themeScript }} />
 			</head>

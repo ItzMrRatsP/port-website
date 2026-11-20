@@ -1,6 +1,6 @@
-import type { CSSProperties } from "react";
 import { FaDiscord } from "react-icons/fa";
 import CopyDiscord from "./copy-discord";
+import Stars from "./stars";
 import ThemeToggle from "./theme-toggle";
 import WorkShowcase from "./work-showcase";
 import { companies, projects } from "./projects-data";
@@ -17,46 +17,6 @@ const SKILLS = [
 	{ title: "Tools", text: "Admin panels and in-studio helpers" },
 	{ title: "Optimization", text: "Profiling, cleanup and bug fixes" },
 ];
-
-// Hero terminal script. Typing and output timings are computed from this.
-const TERM = [
-	{ cmd: "whoami", out: [<>itzmrratsp, full-stack Roblox developer</>] },
-	{
-		cmd: "./commission --status",
-		out: [
-			<>
-				short-term&nbsp;&nbsp;
-				<b className={SHORT_TERM_OPEN ? "t-ok" : "t-bad"}>● {SHORT_TERM_OPEN ? "open" : "closed"}</b>
-			</>,
-			<>
-				long-term&nbsp;&nbsp;&nbsp;
-				<b className={LONG_TERM_OPEN ? "t-ok" : "t-bad"}>● {LONG_TERM_OPEN ? "open" : "closed"}</b>
-			</>,
-		],
-	},
-	{
-		cmd: "./awards --list",
-		out: [
-			<>
-				<b className="t-warn">1st</b>&nbsp;&nbsp;RDC 2025&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3M1
-			</>,
-			<>
-				<b className="t-warn">2nd</b>&nbsp;&nbsp;Inspire 2024&nbsp;&nbsp;Malice
-			</>,
-		],
-	},
-];
-
-let clock = 0.7;
-const SCRIPT = TERM.map((s) => {
-	const n = s.cmd.length;
-	const start = clock;
-	clock += n * 0.05 + 0.2;
-	const outStart = clock;
-	clock += s.out.length * 0.15 + 0.4;
-	return { ...s, n, start, outStart };
-});
-const END_AT = clock;
 
 function Status({ label, open }: { label: string; open: boolean }) {
 	return (
@@ -79,19 +39,6 @@ function RobloxIcon() {
 		<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
 			<path d="M5.2 2L2 18.8 18.8 22 22 5.2 5.2 2ZM13.7 14.8L9.2 14 10 9.5l4.5.8-.8 4.5Z" />
 		</svg>
-	);
-}
-
-function WindowBar({ title }: { title: string }) {
-	return (
-		<div className="win-bar" aria-hidden="true">
-			<span className="win-dots">
-				<i />
-				<i />
-				<i />
-			</span>
-			<span className="win-title">{title}</span>
-		</div>
 	);
 }
 
@@ -118,7 +65,8 @@ export default function Home() {
 
 			<main>
 				<section className="hero" aria-labelledby="hero-title">
-					<div className="wrap hero-grid">
+					<Stars />
+					<div className="wrap">
 						<div className="hero-copy">
 							<h1 id="hero-title">ItzMrRatsP</h1>
 							<p className="hero-role">Full-stack Roblox developer</p>
@@ -127,63 +75,31 @@ export default function Home() {
 								2nd at Inspire 2024.
 							</p>
 							<div className="hero-actions">
-								<a className="button button--solid button--large" href="#work">
+								<a className="button button--solid" href="#work">
 									See my work
 								</a>
-								<a className="button button--ghost button--large" href="#contact">
+								<a className="button button--ghost" href="#contact">
 									Get in touch
 								</a>
+								<Status label="Short-term" open={SHORT_TERM_OPEN} />
 							</div>
 						</div>
 
-						<div className="win win--term" role="img" aria-label="Terminal showing availability and awards">
-							<WindowBar title="itzmrratsp@roblox: ~" />
-							<div className="term-body" aria-hidden="true">
-								{SCRIPT.map((s) => (
-									<div key={s.cmd}>
-										<div className="t-line">
-											<span className="t-ps">$</span>{" "}
-											<span className="t-type" style={{ "--n": s.n, "--d": `${s.start}s` } as CSSProperties}>
-												{s.cmd}
-											</span>
-										</div>
-										<div className="t-out" style={{ "--d": `${s.outStart}s` } as CSSProperties}>
-											{s.out.map((o, i) => (
-												<div key={i}>{o}</div>
-											))}
-										</div>
-									</div>
-								))}
-								<div className="t-line t-end" style={{ "--d": `${END_AT}s` } as CSSProperties}>
-									<span className="t-ps">$</span> <span className="cursor" />
-								</div>
-							</div>
-						</div>
 					</div>
 				</section>
 
 				<section className="section" id="work" aria-labelledby="work-title">
 					<div className="wrap">
-						<div className="section-head">
-							<h2 id="work-title">Selected work</h2>
-							<p className="section-lede">
-								Shipped games I’ve built or helped build. Pick one for details, then play it on Roblox.
-							</p>
-						</div>
-						<div className="win">
-							<WindowBar title="~/releases" />
-							<div className="win-body">
-								<WorkShowcase projects={projects} />
-							</div>
-						</div>
+						<h2 id="work-title">Selected work</h2>
+						<WorkShowcase projects={projects} />
 					</div>
 				</section>
 
-				<section className="section section--alt" id="about" aria-labelledby="about-title">
+				<section className="section" id="about" aria-labelledby="about-title">
 					<div className="wrap about">
 						<div>
 							<h2 id="about-title">About</h2>
-							<div className="about-text" style={{ marginTop: 20 }}>
+							<div className="about-text">
 								<p>
 									I’m a Roblox developer who works on both sides of a game, from server logic and data to
 									the interface players see.
@@ -207,9 +123,7 @@ export default function Home() {
 
 				<section className="section" id="experience" aria-labelledby="experience-title">
 					<div className="wrap">
-						<div className="section-head">
-							<h2 id="experience-title">Experience</h2>
-						</div>
+						<h2 id="experience-title">Experience</h2>
 						<ul className="timeline">
 							{companies.map((c) => (
 								<li key={c.name}>
@@ -228,7 +142,7 @@ export default function Home() {
 					</div>
 				</section>
 
-				<section className="section section--alt" id="contact" aria-labelledby="contact-title">
+				<section className="section" id="contact" aria-labelledby="contact-title">
 					<div className="wrap">
 						<div className="contact">
 							<div>
@@ -253,15 +167,6 @@ export default function Home() {
 										<RobloxIcon /> Roblox
 									</a>
 								</div>
-							</div>
-							<div className="win win--term">
-								<WindowBar title="message.txt" />
-								<pre className="term-body">{`To:       itzmrratsp (Discord)
-Subject:  <what you need>
-
-What are you building?
-What should it do?
-Deadline and budget (USD or Robux)?`}</pre>
 							</div>
 						</div>
 					</div>
